@@ -16,9 +16,13 @@ export class UserListComponent {
   departments: Deaprtment[] = [];
   employees: Employee[] = [];
   form: FormGroup<any>;
+  currentPage = 1;
+  totalPage = 0;
+  totalRecords = 0;
   ord_employee_name: string = 'ASC';
   ord_certification_name: string = 'ASC';
   ord_end_date: string = 'DESC';
+active: string|string[]|Set<string>|{ [klass: string]: any; }|null|undefined;
   
   constructor(
     private departmentService: DepartmentService,
@@ -55,11 +59,15 @@ export class UserListComponent {
   search() {
     this.employeeService.getAll(this.form.value.employeeName,
       this.form.value.departmentId, this.ord_employee_name,
-      this.ord_certification_name, this.ord_end_date, 0, 5)
+      this.ord_certification_name, this.ord_end_date, (this.currentPage - 1) * 5, 5)
     .subscribe({
       next: (response) => {
         console.log(response);
         this.employees = response.employees;
+        this.totalRecords = response.totalRecords;
+        this.totalPage = Math.ceil(this.totalRecords / 5);
+
+        console.log(this.totalPage);
       },
       error: (error) => {
         console.log(error);
@@ -98,6 +106,11 @@ export class UserListComponent {
       this.ord_end_date = 'ASC'
     }
 
+    this.search();
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
     this.search();
   }
 }
