@@ -5,25 +5,24 @@
       <div class="content-main">
         <div class="search-memb">
           <h1 class="title">会員名称で会員を検索します。検索条件無しの場合は全て表示されます。</h1>
-          <form class="c-form">
+          <form class="c-form" [formGroup]="form" (ngSubmit)="search()">
             <ul class="d-flex">
               <li class="form-group row">
                 <label class="col-form-label">氏名:</label>
-                <div class="col-sm"><input type="text"></div>
+                <div class="col-sm"><input type="text" id="employeeName" formControlName="employeeName"></div>
               </li>
               <li class="form-group row">
                 <label class="col-form-label">グループ:</label>
                 <div class="col-sm">
-                  <select>
-                    <option>全て</option>
-                    <option>Nhóm 1</option>
-                    <option>Nhóm 2</option>
+                  <select  id="departmentId" formControlName="departmentId" required>
+                    <option value="">全て</option>
+                    <option *ngFor="let item of departments" [value]="item.departmentId">{{item.departmentName}}</option>
                   </select>
                 </div>
               </li>
               <li class="form-group row">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-primary btn-sm" onclick="alert('Search action');">検索</button>
+                  <button type="submit" class="btn btn-primary btn-sm">検索</button>
                   <button type="button" class="btn btn-secondary btn-sm" onclick="alert('Open ADM004');">新規追加</button>
                 </div>
               </li>
@@ -44,65 +43,19 @@
               <div>点数</div>
             </div>
             <div class="css-grid-table-body">
-              <div class="bor-l-none">
-                <a routerLink="/user/detail">1</a>
-              </div>
-              <div>Nguyễn Thị Mai Hương</div>
-              <div>1983/07/08</div>
-              <div>Phòng QAT</div>
-              <div>ntmhuong@luvina.net</div>
-              <div>0914326386</div>
-              <div>Trình độ tiếng nhật cấp 4</div>
-              <div>2011/07/08</div>
-              <div>290</div>
-
-              <div class="bor-l-none">
-                <a routerLink="/user/detail">2</a>
-              </div>
-              <div>Lê Thị Xoa</div>
-              <div>1983/07/08</div>
-              <div>Phòng DEV1</div>
-              <div>xoalt@luvina.net</div>
-              <div>1234567894</div>
-              <div>Trình độ tiếng nhật cấp 4</div>
-              <div>2011/07/08</div>
-              <div>290</div>
-
-              <div class="bor-l-none">
-                <a routerLink="/user/detail">3</a>
-              </div>
-              <div>Đặng Thị Hân</div>
-              <div>1983/07/08</div>
-              <div>Phòng QAT</div>
-              <div>handt@luvina.net</div>
-              <div>0914326386</div>
-              <div>Trình độ tiếng nhật cấp 4</div>
-              <div>2011/07/08</div>
-              <div>290</div>
-
-              <div class="bor-l-none">
-                <a routerLink="/user/detail">4</a>
-              </div>
-              <div>Lê Nghiêm Thủy</div>
-              <div>1983/07/08</div>
-              <div>Phòng DEV1</div>
-              <div>thuyln@luvina.net</div>
-              <div>1234567894</div>
-              <div>Trình độ tiếng nhật cấp 4</div>
-              <div>2011/07/08</div>
-              <div>290</div>
-
-              <div class="bor-l-none">
-                <a routerLink="/user/detail">5</a>
-              </div>
-              <div>Lê Phương Anh</div>
-              <div>1983/07/08</div>
-              <div>Phòng DEV1</div>
-              <div>anhlp@luvina.net</div>
-              <div>1234567894</div>
-              <div>Trình độ tiếng nhật cấp 4</div>
-              <div>2011/07/08</div>
-              <div>290</div>
+              <ng-container *ngFor="let item of employees; let i = index">
+                <div class="bor-l-none">
+                  <a routerLink="/user/detail">{{i + 1}}</a>
+                </div>
+                <div>{{item.employeeName}}</div>
+                <div>{{item.employeeBirthDate | date: 'yyyy/MM/dd'}}</div>
+                <div>{{item.departmentName}}</div>
+                <div>{{item.employeeEmail}}</div>
+                <div>{{item.employeeTelephone}}</div>
+                <div>{{item.certificationName}}</div>
+                <div>{{item.endDate | date: 'yyyy/MM/dd'}}</div>
+                <div>{{ item.score }}</div>
+              </ng-container>
             </div>
             <div class="pagin">
               <button class="btn btn-sm btn-pre btn-falcon-default" type="button" disabled="disabled">
@@ -121,7 +74,6 @@
           </div>
         </div>
       </div>
-
     </div>
     <app-footer></app-footer>
   </div>
