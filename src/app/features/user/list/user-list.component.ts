@@ -18,7 +18,7 @@ export class UserListComponent {
   form: FormGroup<any>;
   ord_employee_name: string = 'ASC';
   ord_certification_name: string = 'ASC';
-  ord_end_date: string = 'ASC';
+  ord_end_date: string = 'DESC';
   
   constructor(
     private departmentService: DepartmentService,
@@ -68,5 +68,36 @@ export class UserListComponent {
         console.log('complete');
       }
     });
+  }
+
+  changeOrderEmployeeName() {
+    if(this.ord_employee_name === 'ASC') {
+      this.ord_employee_name = 'DESC';
+    } else {
+      this.ord_employee_name = 'ASC'
+    }
+
+    this.search();
+  }
+
+  changeOrderCertificationName() {
+    console.log(this.ord_certification_name);
+    if(this.ord_certification_name === 'ASC') {
+      this.ord_certification_name = 'DESC';
+    } else {
+      this.ord_certification_name = 'ASC'
+    }
+
+    this.search();
+  }
+
+  changeOrderEndDate() {
+    if(this.ord_end_date === 'ASC') {
+      this.ord_end_date = 'DESC';
+    } else {
+      this.ord_end_date = 'ASC'
+    }
+
+    this.search();
   }
 }

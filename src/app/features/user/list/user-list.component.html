@@ -33,13 +33,40 @@
           <div class="css-grid-table box-shadow">
             <div class="css-grid-table-header">
               <div>ID</div>
-              <div>氏名 ▲▽</div>
-              <div>生年月日 ▲▽</div>
+              <ng-container *ngIf="ord_employee_name === 'ASC'; else elseBlock1">
+                <div (click)="changeOrderEmployeeName()">
+                  氏名 ▲▽
+                </div>
+              </ng-container>
+              <ng-template #elseBlock1>
+                <div (click)="changeOrderEmployeeName()">
+                  氏名 ▼△
+                </div>
+              </ng-template>
+              <div>生年月日</div>
               <div>グループ</div>
               <div>メールアドレス</div>
               <div>電話番号</div>
-              <div>日本語能力</div>
-              <div>失効日 ▼△</div>
+              <ng-container *ngIf="ord_certification_name === 'ASC'; else elseBlock2">
+                <div (click)="changeOrderCertificationName()">
+                  日本語能力 ▲▽
+                </div>
+              </ng-container>
+              <ng-template #elseBlock2>
+                <div (click)="changeOrderCertificationName()">
+                  日本語能力 ▼△
+                </div>
+              </ng-template>
+              <ng-container *ngIf="ord_end_date === 'ASC'; else elseBlock3">
+                <div (click)="changeOrderEndDate()">
+                  失効日 ▲▽
+                </div>
+              </ng-container>
+              <ng-template #elseBlock3>
+                <div (click)="changeOrderEndDate()">
+                  失効日 ▼△
+                </div>
+              </ng-template>
               <div>点数</div>
             </div>
             <div class="css-grid-table-body">
