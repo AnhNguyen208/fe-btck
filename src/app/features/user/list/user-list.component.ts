@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { AppConstants } from "../../../app-constants";
 import { DepartmentService } from 'src/app/shared/department/department.service';
 import { Deaprtment } from 'src/app/model/department';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -17,15 +15,15 @@ export class UserListComponent {
   departments: Deaprtment[] = [];
   employees: Employee[] = [];
   form: FormGroup<any>;
-  currentPage = 1;
-  totalPage = 0;
-  totalRecords = 0;
-  limit = 5;
-  ord_employee_name: string = 'ASC';
-  ord_certification_name: string = 'ASC';
-  ord_end_date: string = 'DESC';
-active: string|string[]|Set<string>|{ [klass: string]: any; }|null|undefined;
-  
+  currentPage:number = 1;
+  pages:number[] = [];
+  totalPages:number = 0;
+  totalRecords:number = 0;
+  limit:number = 5;
+  ord_employee_name:string = 'ASC';
+  ord_certification_name:string = 'ASC';
+  ord_end_date:string = 'DESC';
+
   constructor(
     private router: Router,
     private departmentService: DepartmentService,
@@ -41,6 +39,7 @@ active: string|string[]|Set<string>|{ [klass: string]: any; }|null|undefined;
   ngOnInit(): void {
     this.getDepartments();
     this.search();
+    this.paginationPages();
   };
 
   getDepartments() {
@@ -68,9 +67,9 @@ active: string|string[]|Set<string>|{ [klass: string]: any; }|null|undefined;
         console.log(response);
         this.employees = response.employees;
         this.totalRecords = response.totalRecords;
-        this.totalPage = Math.ceil(this.totalRecords / this.limit);
+        this.totalPages = Math.ceil(this.totalRecords / this.limit);
 
-        console.log(this.totalPage);
+        console.log(this.totalPages);
       },
       error: (error) => {
         console.log(error);
@@ -90,6 +89,7 @@ active: string|string[]|Set<string>|{ [klass: string]: any; }|null|undefined;
     }
 
     this.search();
+    this.paginationPages();
   }
 
   changeOrderCertificationName() {
@@ -101,6 +101,7 @@ active: string|string[]|Set<string>|{ [klass: string]: any; }|null|undefined;
     }
 
     this.search();
+    this.paginationPages();
   }
 
   changeOrderEndDate() {
@@ -111,10 +112,36 @@ active: string|string[]|Set<string>|{ [klass: string]: any; }|null|undefined;
     }
 
     this.search();
+    this.paginationPages();
+  }
+
+  paginationPages() {
+    this.pages = [];
+    const total = this.totalPages;
+
+    if (total > 1) {
+      if(this.currentPage > 1 && this.currentPage < total) {
+        this.pages.push(this.currentPage - 1);
+        this.pages.push(this.currentPage);
+        this.pages.push(this.currentPage + 1);
+      }
+
+      if(this.currentPage === 1) {
+        this.pages.push(2);
+      }
+
+      if(this.currentPage === this.totalPages) {
+        this.pages.push(this.totalPages - 1);
+      }
+  
+      this.pages = this.pages.filter(item => item !== 1);
+      this.pages = this.pages.filter(item => item !== this.totalPages);
+    }
   }
 
   changePage(page: number) {
     this.currentPage = page;
     this.search();
+    this.paginationPages();
   }
 }
