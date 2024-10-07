@@ -6,6 +6,7 @@ import { Deaprtment } from 'src/app/model/department';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/shared/employee/employee.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -25,6 +26,7 @@ export class UserListComponent {
 active: string|string[]|Set<string>|{ [klass: string]: any; }|null|undefined;
   
   constructor(
+    private router: Router,
     private departmentService: DepartmentService,
     private employeeService: EmployeeService,
     private fb: FormBuilder
@@ -71,6 +73,7 @@ active: string|string[]|Set<string>|{ [klass: string]: any; }|null|undefined;
       },
       error: (error) => {
         console.log(error);
+        this.router.navigate(['SystemErrorComponent'])
       },
       complete: () => {
         console.log('complete');
