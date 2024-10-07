@@ -19,7 +19,7 @@ export class UserListComponent {
   pages:number[] = [];
   totalPages:number = 0;
   totalRecords:number = 0;
-  limit:number = 5;
+  limit:number = 1;
   ord_employee_name:string = 'ASC';
   ord_certification_name:string = 'ASC';
   ord_end_date:string = 'DESC';
@@ -38,8 +38,7 @@ export class UserListComponent {
 
   ngOnInit(): void {
     this.getDepartments();
-    this.search();
-    this.paginationPages();
+    this.getEmployees();
   };
 
   getDepartments() {
@@ -58,7 +57,7 @@ export class UserListComponent {
     });
   }
 
-  search() {
+  getEmployees() {
     this.employeeService.getAll(this.form.value.employeeName,
       this.form.value.departmentId, this.ord_employee_name,
       this.ord_certification_name, this.ord_end_date, (this.currentPage - 1) * this.limit, this.limit)
@@ -68,8 +67,14 @@ export class UserListComponent {
         this.employees = response.employees;
         this.totalRecords = response.totalRecords;
         this.totalPages = Math.ceil(this.totalRecords / this.limit);
-
+        
         console.log(this.totalPages);
+        console.log(this.employees.length);
+        if(this.employees.length === 0) {
+          this.changePage(this.currentPage - 1);
+        }
+
+        this.paginationPages();
       },
       error: (error) => {
         console.log(error);
@@ -81,6 +86,11 @@ export class UserListComponent {
     });
   }
 
+  search() {
+   this.currentPage = 1;
+   this.getEmployees();
+  }
+
   changeOrderEmployeeName() {
     if(this.ord_employee_name === 'ASC') {
       this.ord_employee_name = 'DESC';
@@ -89,7 +99,6 @@ export class UserListComponent {
     }
 
     this.search();
-    this.paginationPages();
   }
 
   changeOrderCertificationName() {
@@ -101,7 +110,6 @@ export class UserListComponent {
     }
 
     this.search();
-    this.paginationPages();
   }
 
   changeOrderEndDate() {
@@ -112,7 +120,6 @@ export class UserListComponent {
     }
 
     this.search();
-    this.paginationPages();
   }
 
   paginationPages() {
@@ -141,7 +148,6 @@ export class UserListComponent {
 
   changePage(page: number) {
     this.currentPage = page;
-    this.search();
-    this.paginationPages();
+    this.getEmployees();
   }
 }
