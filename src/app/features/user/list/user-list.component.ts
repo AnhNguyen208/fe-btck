@@ -20,6 +20,7 @@ export class UserListComponent {
   currentPage = 1;
   totalPage = 0;
   totalRecords = 0;
+  limit = 5;
   ord_employee_name: string = 'ASC';
   ord_certification_name: string = 'ASC';
   ord_end_date: string = 'DESC';
@@ -61,13 +62,13 @@ active: string|string[]|Set<string>|{ [klass: string]: any; }|null|undefined;
   search() {
     this.employeeService.getAll(this.form.value.employeeName,
       this.form.value.departmentId, this.ord_employee_name,
-      this.ord_certification_name, this.ord_end_date, (this.currentPage - 1) * 5, 5)
+      this.ord_certification_name, this.ord_end_date, (this.currentPage - 1) * this.limit, this.limit)
     .subscribe({
       next: (response) => {
         console.log(response);
         this.employees = response.employees;
         this.totalRecords = response.totalRecords;
-        this.totalPage = Math.ceil(this.totalRecords / 5);
+        this.totalPage = Math.ceil(this.totalRecords / this.limit);
 
         console.log(this.totalPage);
       },

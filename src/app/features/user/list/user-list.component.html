@@ -34,40 +34,26 @@
           <div class="css-grid-table box-shadow">
             <div class="css-grid-table-header">
               <div>ID</div>
-              <ng-container *ngIf="ord_employee_name === 'ASC'; else elseBlock1">
+              <ng-container *ngIf="ord_employee_name">
                 <div (click)="changeOrderEmployeeName()">
-                  氏名 ▲▽
+                  氏名 {{ord_employee_name === 'ASC' ? '▲▽' : '▼△' }} 
                 </div>
               </ng-container>
-              <ng-template #elseBlock1>
-                <div (click)="changeOrderEmployeeName()">
-                  氏名 ▼△
-                </div>
-              </ng-template>
+            
               <div>生年月日</div>
               <div>グループ</div>
               <div>メールアドレス</div>
               <div>電話番号</div>
-              <ng-container *ngIf="ord_certification_name === 'ASC'; else elseBlock2">
+              <ng-container *ngIf="ord_certification_name">
                 <div (click)="changeOrderCertificationName()">
-                  日本語能力 ▲▽
+                  日本語能力 {{ord_certification_name === 'ASC' ? '▲▽' : '▼△' }} 
                 </div>
               </ng-container>
-              <ng-template #elseBlock2>
-                <div (click)="changeOrderCertificationName()">
-                  日本語能力 ▼△
-                </div>
-              </ng-template>
-              <ng-container *ngIf="ord_end_date === 'ASC'; else elseBlock3">
+              <ng-container *ngIf="ord_end_date">
                 <div (click)="changeOrderEndDate()">
-                  失効日 ▲▽
+                  失効日 {{ord_end_date === 'ASC' ? '▲▽' : '▼△' }} 
                 </div>
               </ng-container>
-              <ng-template #elseBlock3>
-                <div (click)="changeOrderEndDate()">
-                  失効日 ▼△
-                </div>
-              </ng-template>
               <div>点数</div>
             </div>
             <div class="css-grid-table-body">
@@ -97,14 +83,33 @@
                 </svg>
               </button>
               <ng-container *ngIf="totalPage > 0">
+                <!-- <button class="btn btn-sm text-primary btn-falcon-default"
+                  [ngClass]="{active: currentPage === 1}"
+                  (click)="changePage(1)"
+                  >
+                  1
+                </button>
+                <button class="btn btn-sm text-primary btn-falcon-default"
+                  *ngFor="let item of [].constructor(totalPage - 1); let i = index"
+                  [ngClass]="{active: i + 2 === currentPage}"
+                  (click)="changePage(i + 2)"
+                  >
+                  {{i + 2}}
+                </button> -->
                 <button class="btn btn-sm text-primary btn-falcon-default"
                   *ngFor="let item of [].constructor(totalPage); let i = index"
-                  [ngClass]="{ active: i + 1 === currentPage}"
+                  [ngClass]="{active: i + 1 === currentPage}"
                   (click)="changePage(i + 1)"
                   >
                   {{i + 1}}
                 </button>
               </ng-container>
+              <!-- <a class="btn btn-sm text-primary btn-falcon-default" href="#!">
+                <svg class="svg-inline--fa fa-ellipsis-h fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                  <path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z">
+                  </path>
+                </svg>
+              </a> -->
               <button class="btn btn-sm btn-next btn-falcon-default" type="button"
                 [disabled]="currentPage === totalPage" (click)="changePage(currentPage + 1)">
                 <svg class="svg-inline--fa fa-chevron-right fa-w-10" aria-hidden="true" focusable="false"
