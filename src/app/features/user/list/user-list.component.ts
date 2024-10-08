@@ -22,7 +22,7 @@ export class UserListComponent {
   limit:number = 5;
   ord_employee_name:string = 'ASC';
   ord_certification_name:string = 'ASC';
-  ord_end_date:string = 'DESC';
+  ord_end_date:string = 'ASC';
 
   constructor(
     private router: Router,
