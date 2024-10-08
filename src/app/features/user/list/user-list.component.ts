@@ -19,7 +19,7 @@ export class UserListComponent {
   pages:number[] = [];
   totalPages:number = 0;
   totalRecords:number = 0;
-  limit:number = 1;
+  limit:number = 5;
   ord_employee_name:string = 'ASC';
   ord_certification_name:string = 'ASC';
   ord_end_date:string = 'DESC';
@@ -70,7 +70,8 @@ export class UserListComponent {
         
         console.log(this.totalPages);
         console.log(this.employees.length);
-        if(this.employees.length === 0) {
+
+        if(this.employees.length === 0 && this.currentPage > 1) {
           this.changePage(this.currentPage - 1);
         }
 
