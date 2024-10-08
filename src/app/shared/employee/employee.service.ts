@@ -15,7 +15,7 @@ export class EmployeeService {
     ord_certification_name: string, ord_end_date: string,
     offset: number, limit: number) {
       return this.http.get<any>(
-        `${this.apiUrl}?employee_name=${employee_name}&` +
+        `${this.apiUrl}?employee_name=${encodeURIComponent(employee_name)}&` +
          `department_id=${department_id}&ord_employee_name=${ord_employee_name}` + 
          `&ord_certification_name=${ord_certification_name}&ord_end_date=${ord_end_date}&`+
          `offset=${offset}&limit=${limit}` 
