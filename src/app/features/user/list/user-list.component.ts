@@ -19,7 +19,7 @@ export class UserListComponent {
   pages:number[] = [];
   totalPages:number = 0;
   totalRecords:number = 0;
-  limit:number = 2;
+  limit:number = 5;
   ord_employee_name:string = 'ASC';
   ord_certification_name:string = 'ASC';
   ord_end_date:string = 'ASC';
