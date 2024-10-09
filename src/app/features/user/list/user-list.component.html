@@ -31,6 +31,7 @@
           </form>
         </div>
         <div class="row row-table">
+          <p class="error-message" *ngIf="employees.length === 0">検索条件に該当するユーザが見つかりません。</p>
           <div class="css-grid-table box-shadow">
             <div class="css-grid-table-header">
               <div>ID</div>

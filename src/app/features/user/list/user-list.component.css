@@ -1,4 +1,9 @@
 .btn.active {
     background-color: #4CAF50 !important;
     color: white !important;
+    text-decoration: underline;
+}
+
+.error-message {
+    color: red;
 }

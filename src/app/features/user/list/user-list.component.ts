@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { DepartmentService } from 'src/app/shared/department/department.service';
+import { DepartmentService } from 'src/app/shared/service/department/department.service';
 import { Deaprtment } from 'src/app/model/department';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employee } from 'src/app/model/employee';
-import { EmployeeService } from 'src/app/shared/employee/employee.service';
+import { EmployeeService } from 'src/app/shared/service/employee/employee.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,7 +19,7 @@ export class UserListComponent {
   pages:number[] = [];
   totalPages:number = 0;
   totalRecords:number = 0;
-  limit:number = 5;
+  limit:number = 2;
   ord_employee_name:string = 'ASC';
   ord_certification_name:string = 'ASC';
   ord_end_date:string = 'ASC';
@@ -32,7 +32,7 @@ export class UserListComponent {
   ) {
     this.form = this.fb.group({
       departmentId: [''],
-      employeeName: [''],
+      employeeName: ['', [Validators.maxLength(125)]],
     });
    }
 
