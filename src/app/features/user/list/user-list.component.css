@@ -4,6 +4,10 @@
     text-decoration: underline;
 }
 
-.error-message {
-    color: red;
-}
+.css-grid-table-body div {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    max-width: 200px;
+    display: inline-block;
+  }

@@ -16,7 +16,8 @@
                 <div class="col-sm">
                   <select id="departmentId" formControlName="departmentId" required>
                     <option value="">全て</option>
-                    <option *ngFor="let item of departments" [value]="item.departmentId">{{item.departmentName}}
+                    <option *ngFor="let item of departments" [value]="item.departmentId">
+                      {{item.departmentName.length > 25 ? item.departmentName.slice(0, 25) + '...' : item.departmentName}}
                     </option>
                   </select>
                 </div>
@@ -24,7 +25,7 @@
               <li class="form-group row">
                 <div class="btn-group">
                   <button type="submit" class="btn btn-primary btn-sm">検索</button>
-                  <button type="button" class="btn btn-secondary btn-sm" onclick="alert('Open ADM004');">新規追加</button>
+                  <button type="button" class="btn btn-secondary btn-sm" [routerLink]="['/user/adm004']">新規追加</button>
                 </div>
               </li>
             </ul>
@@ -90,7 +91,7 @@
                   {{1}}
                 </button>
 
-                <a *ngIf="currentPage > 3" class="btn btn-sm text-primary btn-falcon-default" href="#!">
+                <button *ngIf="currentPage > 3" class="btn btn-sm text-primary btn-falcon-default">
                   <svg class="svg-inline--fa fa-ellipsis-h fa-w-16" aria-hidden="true" focusable="false"
                     data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512" data-fa-i2svg="">
@@ -98,14 +99,14 @@
                       d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z">
                     </path>
                   </svg>
-                </a>
+                </button>
 
                 <button class="btn btn-sm text-primary btn-falcon-default" *ngFor="let item of pages"
                   [ngClass]="{active: item === currentPage}" (click)="changePage(item)">
                   {{item}}
                 </button>
 
-                <a *ngIf="currentPage < totalPages - 2" class="btn btn-sm text-primary btn-falcon-default" href="#!">
+                <button *ngIf="currentPage < totalPages - 2" class="btn btn-sm text-primary btn-falcon-default" href="#!">
                   <svg class="svg-inline--fa fa-ellipsis-h fa-w-16" aria-hidden="true" focusable="false"
                     data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512" data-fa-i2svg="">
@@ -113,7 +114,7 @@
                       d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z">
                     </path>
                   </svg>
-                </a>
+                </button>
 
                 <button class="btn btn-sm text-primary btn-falcon-default"
                   [ngClass]="{active: currentPage === totalPages}" (click)="changePage(totalPages)">

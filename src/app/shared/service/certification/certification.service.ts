@@ -6,8 +6,8 @@ import { AppConstants } from 'src/app/app-constants';
 @Injectable({
   providedIn: 'root'
 })
-export class DepartmentService {
-  private apiUrl = AppConstants.BASE_URL_API + '/departments';
+export class CertificationService {
+  private apiUrl = AppConstants.BASE_URL_API + '/certifications';
 
   constructor(private http: HttpClient) { }
 
