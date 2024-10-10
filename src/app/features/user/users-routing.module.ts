@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'user', redirectTo: 'user/list', pathMatch: 'full'},
   { path: 'user/list', component: UserListComponent, canActivate: [AuthorizeGuard] },
   { path: 'user/adm004', component: Adm004Component, canActivate: [AuthorizeGuard] },
-  { path: 'user/adm004/:id', component: Adm004Component, canActivate: [AuthorizeGuard] },
+  // { path: 'user/adm004/:id', component: Adm004Component, canActivate: [AuthorizeGuard] },
   { path: '**', component: SystemErrorComponent },
 ];
 

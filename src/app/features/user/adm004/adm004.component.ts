@@ -16,21 +16,23 @@ export class Adm004Component implements OnInit {
   departments: Deaprtment[] = [];
   certifications: Certification[] = [];
   form: FormGroup<any>;
+  bsValue: Date = new Date();
   
   constructor(private route: ActivatedRoute, 
     private departmentService: DepartmentService, 
     private certificationService: CertificationService,
     private fb: FormBuilder) {
+
       this.form = this.fb.group({
-        employeeName: [''],
-        employeeBirthDate: [''],
-        employeeEmail: [''],
-        employeeTelephone: [''],
-        employeeNameKana: [''],
-        employeeLoginId: [''],
-        employeeLoginPassword: [''],
-        departmentId: [''],
-        certifications: [],
+        employeeName: ['', [Validators.required, Validators.maxLength(255)]],
+        employeeBirthDate: ['', [Validators.required]],
+        employeeEmail: ['', [Validators.required, Validators.maxLength(255)]],
+        employeeTelephone: ['', [Validators.required, Validators.maxLength(50)]],
+        employeeNameKana: ['', [Validators.required, Validators.maxLength(255)]],
+        employeeLoginId: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^(?![0-9])[a-zA-Z0-9_]*$/)]],
+        employeeLoginPassword: ['', [Validators.required, Validators.maxLength(100)]],
+        departmentId: ['', [Validators.required]],
+        certificationId: [''],
       });
   }
 
@@ -74,6 +76,6 @@ export class Adm004Component implements OnInit {
   }
 
   submit() {
-
+    console.log(this.form);
   }
 }
