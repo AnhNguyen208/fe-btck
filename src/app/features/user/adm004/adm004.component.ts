@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Certification } from 'src/app/model/certification';
 import { Deaprtment } from 'src/app/model/department';
-import { CertificationService } from 'src/app/shared/service/certification/certification.service';
-import { DepartmentService } from 'src/app/shared/service/department/department.service';
+import { CertificationService } from 'src/app/service/certification/certification.service';
+import { DepartmentService } from 'src/app/service/department/department.service';
 
 @Component({
   selector: 'app-adm004',

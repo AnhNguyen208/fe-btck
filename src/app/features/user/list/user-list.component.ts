@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { DepartmentService } from 'src/app/shared/service/department/department.service';
+import { DepartmentService } from 'src/app/service/department/department.service';
 import { Deaprtment } from 'src/app/model/department';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employee } from 'src/app/model/employee';
-import { EmployeeService } from 'src/app/shared/service/employee/employee.service';
+import { EmployeeService } from 'src/app/service/employee/employee.service';
 import { Router } from '@angular/router';
 
 @Component({
