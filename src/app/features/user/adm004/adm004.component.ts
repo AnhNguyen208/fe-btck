@@ -24,15 +24,19 @@ export class Adm004Component implements OnInit {
     private fb: FormBuilder) {
 
       this.form = this.fb.group({
-        employeeName: ['', [Validators.required, Validators.maxLength(255)]],
+        employeeName: ['', [Validators.required, Validators.maxLength(125)]],
         employeeBirthDate: ['', [Validators.required]],
-        employeeEmail: ['', [Validators.required, Validators.maxLength(255)]],
+        employeeEmail: ['', [Validators.required, Validators.maxLength(125)]],
         employeeTelephone: ['', [Validators.required, Validators.maxLength(50)]],
-        employeeNameKana: ['', [Validators.required, Validators.maxLength(255)]],
+        employeeNameKana: ['', [Validators.required, Validators.maxLength(125)]],
         employeeLoginId: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^(?![0-9])[a-zA-Z0-9_]*$/)]],
-        employeeLoginPassword: ['', [Validators.required, Validators.maxLength(100)]],
+        employeeLoginPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
+        employeeLoginConfirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
         departmentId: ['', [Validators.required]],
         certificationId: [''],
+        startDate: [''],
+        endDate: [''],
+        score: [''],
       });
   }
 
