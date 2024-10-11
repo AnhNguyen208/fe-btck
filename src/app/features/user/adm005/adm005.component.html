@@ -25,7 +25,7 @@
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">生年月日</label>
-                        <div class="col-sm col-sm-10">{{form.value.employeeBirthDate}}</div>
+                        <div class="col-sm col-sm-10">{{form.value.employeeBirthDate | date:"yyyy/MM/dd"}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">メールアドレス</label>
@@ -42,11 +42,11 @@
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">資格交付日</label>
-                        <div class="col-sm col-sm-10">{{form.value.startDate}}</div>
+                        <div class="col-sm col-sm-10">{{form.value.startDate | date:"yyyy/MM/dd"}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">失効日</label>
-                        <div class="col-sm col-sm-10">{{form.value.endDate}}</div>
+                        <div class="col-sm col-sm-10">{{form.value.endDate | date:"yyyy/MM/dd"}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">点数</label>

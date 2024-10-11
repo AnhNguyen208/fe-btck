@@ -88,7 +88,7 @@ export class Adm004Component implements OnInit {
 
       this.form.setValue({
         employeeName: employee.employeeName,
-        employeeBirthDate: new Date(employee.employeeBirthDate),
+        employeeBirthDate: new Date(employee.employeeBirthDate) ? new Date(employee.employeeBirthDate)  : '',
         employeeEmail: employee.employeeEmail,
         employeeTelephone: employee.employeeTelephone,
         employeeNameKana: employee.employeeNameKana,
@@ -99,8 +99,8 @@ export class Adm004Component implements OnInit {
         departmentName: employee.departmentName,
         certificationId: employee.certificationId,
         certificationName: employee.certificationName,
-        startDate: new Date(employee.startDate),
-        endDate: new Date(employee.endDate),
+        startDate: new Date(employee.startDate) ? new Date(employee.startDate) : '',
+        endDate: new Date(employee.endDate) ? new Date(employee.endDate) : '',
         score: employee.score
       });
 
