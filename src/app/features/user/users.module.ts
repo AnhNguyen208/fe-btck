@@ -23,7 +23,7 @@ import { Adm005Component } from './adm005/adm005.component';
     UsersRoutingModule,
     BsDatepickerModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [BsDatepickerConfig]
 })

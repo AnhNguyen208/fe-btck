@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Certification } from 'src/app/model/certification';
 import { Deaprtment } from 'src/app/model/department';
 import { CertificationService } from 'src/app/service/certification/certification.service';
@@ -18,11 +18,13 @@ export class Adm004Component implements OnInit {
   form: FormGroup<any>;
   bsValue: Date = new Date();
   
-  constructor(private route: ActivatedRoute, 
+  constructor(
+    private activeRoute: ActivatedRoute, 
     private departmentService: DepartmentService, 
     private certificationService: CertificationService,
-    private fb: FormBuilder) {
-
+    private fb: FormBuilder, 
+    private router: Router
+  ) {
       this.form = this.fb.group({
         employeeName: ['', [Validators.required, Validators.maxLength(125)]],
         employeeBirthDate: ['', [Validators.required]],
@@ -33,7 +35,9 @@ export class Adm004Component implements OnInit {
         employeeLoginPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
         employeeLoginConfirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
         departmentId: ['', [Validators.required]],
+        departmentName: [''],
         certificationId: [''],
+        certificationName: [''],
         startDate: [''],
         endDate: [''],
         score: [''],
@@ -43,10 +47,7 @@ export class Adm004Component implements OnInit {
   ngOnInit(): void {
     this.getDepartments();
     this.getCertifications();
-    this.route.params.subscribe(params => {
-      this.id = params['id'];
-      // Làm gì đó với id
-    });
+    this.loadEmployee();
   }
 
   getDepartments() {
@@ -79,7 +80,65 @@ export class Adm004Component implements OnInit {
     });
   }
 
+  loadEmployee() {
+    const value = sessionStorage.getItem("employee");
+   
+    if(value) {
+      let employee = JSON.parse(value);
+
+      this.form.setValue({
+        employeeName: employee.employeeName,
+        employeeBirthDate: new Date(employee.employeeBirthDate),
+        employeeEmail: employee.employeeEmail,
+        employeeTelephone: employee.employeeTelephone,
+        employeeNameKana: employee.employeeNameKana,
+        employeeLoginId: employee.employeeLoginId,
+        employeeLoginPassword: employee.employeeLoginPassword,
+        employeeLoginConfirmPassword: employee.employeeLoginPassword,
+        departmentId: employee.departmentId,
+        departmentName: employee.departmentName,
+        certificationId: employee.certificationId,
+        certificationName: employee.certificationName,
+        startDate: new Date(employee.startDate),
+        endDate: new Date(employee.endDate),
+        score: employee.score
+      });
+
+      sessionStorage.removeItem("employee");
+
+      console.log(this.form.value);
+      
+    } else {
+      this.activeRoute.params.subscribe(params => {
+        this.id = params['id'];
+        // Làm gì đó với id
+      });
+    }
+   
+  }
+
   submit() {
-    console.log(this.form);
+    // if (this.form.valid) {
+    //   this.router.navigate(['/user/adm005']);
+    // } else {
+    //   // Mark all fields as touched to show validation errors
+    //   this.form.markAllAsTouched();
+    // }
+
+    this.departments.forEach((value) => {
+      if(value.departmentId == this.form.value.departmentId) {
+        this.form.value.departmentName = value.departmentName;
+      }
+    });
+
+    this.certifications.forEach((value) => {
+      if(value.certificationId == this.form.value.certificationId) {
+        this.form.value.certificationName = value.certificationName;
+      }
+    });
+
+    sessionStorage.setItem("employee", JSON.stringify(this.form.value));
+    this.router.navigate(['/user/adm005']);
+
   }
 }
