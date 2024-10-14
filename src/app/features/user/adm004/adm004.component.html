@@ -8,20 +8,10 @@
                         <label class="col-form-label col-sm-2"><i class="relative">アカウント氏名:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="employeeLoginId"
+                            <input type="text" class="form-control" formControlName="employeeLoginId" maxlength="50"
                                 [required]="form.get('employeeLoginId')?.touched && form.get('employeeLoginId')?.invalid ? true : false">
-                            <div
-                                *ngIf="form.get('employeeLoginId')?.touched && form.get('employeeLoginId')?.invalid">
-                                <div class="error-message"
-                                    *ngIf="form.get('employeeLoginId')?.errors?.['required']">Username is
-                                    required.</div>
-                                <div class="error-message"
-                                    *ngIf="form.get('employeeLoginId')?.errors?.['maxlength']">Username must
-                                    not exceed 50 characters.</div>
-                                <div class="error-message"
-                                    *ngIf="form.get('employeeLoginId')?.errors?.['pattern']">Username must
-                                    start with a letter and can only contain letters, numbers, and underscores.
-                                </div>
+                            <div *ngIf="form.get('employeeLoginId')?.touched && form.get('employeeLoginId')?.invalid">
+                                <div class="error-message">{{errorMessage.employeeLoginId}}</div>
                             </div>
                         </div>
                     </li>
@@ -29,27 +19,42 @@
                         <label class="col-form-label col-sm-2"><i class="relative">グループ:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
-                            <select class="form-control" formControlName="departmentId">
-                                <option value="">選択してください</option>
+                            <select class="form-control" formControlName="departmentId"
+                                [required]="form.get('departmentId')?.touched && form.get('departmentId')?.invalid ? true : false">
+                                <option value=''>選択してください</option>
                                 <option *ngFor="let item of departments" [value]="item.departmentId">
                                     {{item.departmentName}}
                                 </option>
                             </select>
+                            <div *ngIf="form.get('departmentId')?.touched && form.get('departmentId')?.invalid">
+                                <div class="error-message">{{errorMessage.departmentId}}</div>
+                            </div>
                         </div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2"><i class="relative">氏名:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="employeeName">
+                            <input type="text" class="form-control" formControlName="employeeName" maxlength="125"
+                                [required]="form.get('employeeName')?.touched && form.get('employeeName')?.invalid ? true : false">
+                            <div *ngIf="form.get('employeeName')?.touched && form.get('employeeName')?.invalid">
+                                <div class="error-message">{{errorMessage.employeeName}}</div>
+                            </div>
                         </div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2"><i class="relative">カタカナ氏名:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="employeeNameKana">
-                            <!-- <div class="invalid-feedback">Example invalid form file feedback</div> -->
+                            <input type="text" class="form-control" formControlName="employeeNameKana" maxlength="125"
+                                [required]="form.get('employeeNameKana')?.touched && form.get('employeeNameKana')?.invalid ? true : false">
+                            <div
+                                *ngIf="form.get('employeeNameKana')?.touched && form.get('employeeNameKana')?.invalid || form.errors?.['kanaInvalid']">
+                                <div class="error-message">{{errorMessage.employeeNameKana}}</div>
+                            </div>
+                            <div *ngIf="form.get('employeeNameKana')?.touched && form.errors?.['kanaInvalid']">
+                                <div class="error-message">{{errorMessage.employeeNameKana}}</div>
+                            </div>
                         </div>
                     </li>
                     <li class="form-group row d-flex">
@@ -57,10 +62,15 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10 d-flex">
                             <div class="input-group date datepicker" data-date-format="dd-mm-yyyy">
-                                <input class="form-control" type="text" formControlName="employeeBirthDate"
-                                    bsDatepicker [bsValue]="bsValue">
-                                <span class="input-group-addon"><i
+                                <input class="form-control" type="text" formControlName="employeeBirthDate" bsDatepicker
+                                    [bsValue]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }"
+                                    [required]="form.get('employeeBirthDate')?.touched && form.get('employeeBirthDate')?.invalid ? true : false">
+                                <span style="margin-left: -15px;" class="input-group-addon"><i
                                         class="glyphicon glyphicon-calendar"></i></span>
+                                <div style="margin-left: -220px;"
+                                    *ngIf="form.get('employeeBirthDate')?.touched && form.get('employeeBirthDate')?.invalid">
+                                    <div class="error-message">{{errorMessage.employeeBirthDate}}</div>
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -68,32 +78,59 @@
                         <label class="col-form-label col-sm-2"><i class="relative">メールアドレス:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="employeeEmail">
+                            <input type="text" class="form-control" formControlName="employeeEmail" maxlength="125"
+                                [required]="form.get('employeeEmail')?.touched && form.get('employeeEmail')?.invalid ? true : false">
+                            <div *ngIf="form.get('employeeEmail')?.touched && form.get('employeeEmail')?.invalid">
+                                <div class="error-message">{{errorMessage.employeeEmail}}</div>
+                            </div>
                         </div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2"><i class="relative">電話番号:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="employeeTelephone">
+                            <input type="text" class="form-control" formControlName="employeeTelephone" maxlength="50"
+                                [required]="form.get('employeeTelephone')?.touched && form.get('employeeTelephone')?.invalid ? true : false">
+                            <div
+                                *ngIf="form.get('employeeTelephone')?.touched && form.get('employeeTelephone')?.invalid">
+                                <div class="error-message">{{errorMessage.employeeTelephone}}</div>
+                            </div>
                         </div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2"><i class="relative">パスワード:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="employeeLoginPassword">
+                            <input type="text" class="form-control" formControlName="employeeLoginPassword"
+                                minlength="8" maxlength="50"
+                                [required]="form.get('employeeLoginPassword')?.touched && form.get('employeeLoginPassword')?.invalid ? true : false">
+                            <div
+                                *ngIf="form.get('employeeLoginPassword')?.touched && form.get('employeeLoginPassword')?.invalid">
+                                <div class="error-message">{{errorMessage.employeeLoginPassword}}</div>
+                            </div>
                         </div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2"><i class="relative">パスワード（確認）:</i></label>
-                        <div class="col-sm col-sm-10"><input type="text" class="form-control" formControlName="employeeLoginConfirmPassword"></div>
+                        <div class="col-sm col-sm-10">
+                            <input type="text" class="form-control" formControlName="employeeLoginConfirmPassword"
+                                [required]="form.get('employeeLoginConfirmPassword')?.touched && form.get('employeeLoginConfirmPassword')?.invalid ? true : false">
+                            <div
+                                *ngIf="form.get('employeeLoginConfirmPassword')?.touched && form.get('employeeLoginConfirmPassword')?.invalid">
+                                <div class="error-message">{{errorMessage.employeeLoginConfirmPassword}}</div>
+                            </div>
+                            <div
+                                *ngIf="form.get('employeeLoginConfirmPassword')?.touched && form.errors?.['passwordMismatch']">
+                                <div class="error-message">{{errorMessage.employeeLoginConfirmPassword}}</div>
+                            </div>
+                        </div>
                     </li>
-                    <li class="title mt-12"><a href="#!">日本語能力</a></li>
+                    <li class="title mt-12">日本語能力</li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2"><i class="relative">資格:</i></label>
                         <div class="col-sm col-sm-10">
-                            <select class="form-control" formControlName="certificationId">
+                            <select class="form-control" formControlName="certificationId"
+                                (change)="onCertificationIdChange()">
                                 <option value="">選択してください</option>
                                 <option *ngFor="let item of certifications" [value]="item.certificationId">
                                     {{item.certificationName}}
@@ -105,13 +142,14 @@
                         <label class="col-form-label col-sm-2"><i class="relative">資格交付日:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10 d-flex">
-                            <div id="datepicker" class="input-group date datepicker"
-                                data-date-format="dd-mm-yyyy">
-                                <input class="form-control" formControlName="startDate"
-                                    [disabled]="form.get('certificationId')?.value === '' ? true : false"
-                                    type="text" bsDatepicker>
-                                <span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-calendar"></i></span>
+                            <div id="datepicker" class="input-group date datepicker" data-date-format="dd-mm-yyyy">
+                                <input class="form-control" formControlName="startDate" type="text" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <div style="margin-left: -220px;"
+                                    *ngIf="form.get('startDate')?.touched && form.get('startDate')?.invalid">
+                                    <div class="error-message">{{errorMessage.startDate}}</div>
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -120,18 +158,28 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10 d-flex">
                             <div class="input-group date datepicker" data-date-format="dd-mm-yyyy">
-                                <input class="form-control" formControlName="endDate"
-                                    [isDisabled]="form.get('certificationId')?.value === '' ? true : false"
-                                    type="text" bsDatepicker>
-                                <span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-calendar"></i></span>
+                                <input class="form-control" formControlName="endDate" type="text" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <div style="margin-left: -220px;"
+                                    *ngIf="form.get('endDate')?.touched && form.get('endDate')?.invalid">
+                                    <div class="error-message">{{errorMessage.endDate}}</div>
+                                </div>
+                                <div style="margin-left: -220px"
+                                    *ngIf="form.get('endDate')?.touched && form.errors?.['dateInvalid']">
+                                    <div class="error-message" style="width: 350px;">{{errorMessage.endDate}}</div>
+                                </div>
                             </div>
                         </div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2"><i class="relative">点数:</i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="score">
+                            <input type="text" class="form-control" formControlName="score"
+                                [required]="form.get('score')?.touched && form.get('score')?.invalid ? true : false">
+                            <div *ngIf="form.get('score')?.touched && form.get('score')?.invalid">
+                                <div class="error-message">{{errorMessage.score}}</div>
+                            </div>
                         </div>
                     </li>
                     <li class="form-group row d-flex">
