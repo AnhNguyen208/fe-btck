@@ -1,7 +1,7 @@
 export enum ErrorMessages {
     // 1.1 Validate parameter [employeeLoginId]
     ER001_EMPLOYEE_LOGIN_ID = "「アカウント名」を入力してください。",
-    ER006_EMPLOYEE_LOGIN_ID = "50桁以内の「アカウント名」を入力してください",
+    ER006_EMPLOYEE_LOGIN_ID = "50桁以内の「アカウント名」を入力してください。",
     ER019_EMPLOYEE_LOGIN_ID = "「アカウント名」は(a-z, A-Z, 0-9 と _)の桁のみです。最初の桁は数字ではない。",
 
     // 1.2 Validate parameter [employeeName]

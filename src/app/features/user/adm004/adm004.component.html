@@ -35,7 +35,7 @@
                         <label class="col-form-label col-sm-2"><i class="relative">氏名:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="employeeName"
+                            <input type="text" class="form-control" formControlName="employeeName" placeholder="ｶﾀｶﾅ"
                                 [required]="isTouchedAndInvalid('employeeName') ? true : false">
                             <div *ngIf="isTouchedAndInvalid('employeeName')">
                                 <div class="error-message">{{errorMessage.employeeName}}</div>
@@ -61,7 +61,7 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10 d-flex">
                             <div class="input-group date datepicker" data-date-format="dd-mm-yyyy">
-                                <input class="form-control" type="text" formControlName="employeeBirthDate" bsDatepicker
+                                <input class="form-control" type="text" readonly formControlName="employeeBirthDate" bsDatepicker
                                     [bsValue]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }"
                                     [required]="isTouchedAndInvalid('employeeBirthDate') ? true : false">
                                 <span style="margin-left: -15px;" class="input-group-addon"><i
@@ -138,7 +138,7 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10 d-flex">
                             <div id="datepicker" class="input-group date datepicker" data-date-format="dd-mm-yyyy">
-                                <input class="form-control" formControlName="startDate" type="text" bsDatepicker
+                                <input class="form-control" readonly formControlName="startDate" type="text" bsDatepicker
                                     [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }"
                                     [required]="isTouchedAndInvalid('startDate') ? true : false">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -153,7 +153,7 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10 d-flex">
                             <div class="input-group date datepicker" data-date-format="dd-mm-yyyy">
-                                <input class="form-control" formControlName="endDate" type="text" bsDatepicker
+                                <input class="form-control" readonly formControlName="endDate" type="text" bsDatepicker
                                     [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }"
                                     [required]="isTouchedAndInvalid('endDate') ? true : false">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>

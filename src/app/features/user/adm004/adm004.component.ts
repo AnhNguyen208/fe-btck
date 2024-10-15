@@ -47,7 +47,7 @@ export class Adm004Component implements OnInit {
       employeeBirthDate: ['', [Validators.required]],
       employeeEmail: ['', [Validators.required, Validators.maxLength(125)]],
       employeeTelephone: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\x00-\x7F]*$/)]],
-      employeeNameKana: ['', [Validators.required, Validators.maxLength(125), Validators.pattern(/^[ァ-ヶー・]+$/)]],
+      employeeNameKana: ['', [Validators.required, Validators.maxLength(125), Validators.pattern(/^[\uFF61-\uFF9F・]+$/)]],
       employeeLoginId: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^(?![0-9])[a-zA-Z0-9_]*$/)]],
       employeeLoginPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
       employeeLoginConfirmPassword: ['', [Validators.required]],
