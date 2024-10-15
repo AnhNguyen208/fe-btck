@@ -29,7 +29,7 @@ export enum ErrorMessages {
 
     // 1.7 Validate parameter [employeeLoginPassword]
     ER001_EMPLOYEE_LOGIN_PASSWORD = "「パスワード」を入力してください。",
-    ER007_EMPLOYEE_LOGIN_PASSWORD = "「パスワード」を8＜＝桁数、＜＝50桁で入力してください。",
+    ER007_EMPLOYEE_LOGIN_PASSWORD = "「パスワード」を8<=桁数、<=50桁で入力してください。",
 
     // 1.8 Validate parameter [departmentId]
     ER002_DEPARTMENT_ID = "「グループ」を入力してください。",
