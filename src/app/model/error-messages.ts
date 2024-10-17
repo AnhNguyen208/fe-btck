@@ -3,6 +3,7 @@ export enum ErrorMessages {
     ER001_EMPLOYEE_LOGIN_ID = "「アカウント名」を入力してください。",
     ER006_EMPLOYEE_LOGIN_ID = "50桁以内の「アカウント名」を入力してください。",
     ER019_EMPLOYEE_LOGIN_ID = "「アカウント名」は(a-z, A-Z, 0-9 と _)の桁のみです。最初の桁は数字ではない。",
+    ER003_EMPLOYEE_LOGIN_ID = "「アカウント名」は存在していません。",
 
     // 1.2 Validate parameter [employeeName]
     ER001_EMPLOYEE_NAME = "「氏名」を入力してください。",
@@ -15,7 +16,7 @@ export enum ErrorMessages {
 
     // 1.4 Validate parameter [employeeBirthDate]
     ER001_EMPLOYEE_BIRTHDATE = "「生年月日」を入力してください。",
-    // ER005_EMPLOYEE_BIRTHDATE = "「生年月日」をyyyy/MM/dd形式で入力してください。",
+    ER005_EMPLOYEE_BIRTHDATE = "「生年月日」をyyyy/MM/dd形式で入力してください。",
     ER011_EMPLOYEE_BIRTHDATE = "「生年月日」は無効になっています。",
 
     // 1.5 Validate parameter [employeeEmail]
@@ -23,7 +24,6 @@ export enum ErrorMessages {
     ER006_EMPLOYEE_EMAIL = "125桁以内の「メールアドレス」を入力してください。",
     ER005_EMPLOYEE_EMAIL = "「メールアドレス」をhalfsize形式で入力してください",
     ER005_EMPLOYEE_EMAIL_FORMAT = "「メールアドレス」をemail(@.)形式で入力してください",
-    // format email ER005
 
     // 1.6 Validate parameter [employeeTelephone]
     ER001_EMPLOYEE_TELEPHONE = "「電話番号」を入力してください。",
@@ -36,7 +36,7 @@ export enum ErrorMessages {
 
     // 1.8 Validate parameter [departmentId]
     ER002_DEPARTMENT_ID = "「グループ」を入力してください。",
-    // ER004_DEPARTMENT_ID = "「グループ」は存在していません。",
+    ER004_DEPARTMENT_ID = "「グループ」は存在していません。",
     ER018_DEPARTMENT_ID = "「グループ」は半角で入力してください。",
 
     // 1.9 Validate parameter [certifications]
@@ -45,13 +45,14 @@ export enum ErrorMessages {
     ER001_CERTIFICATION_SCORE = "「点数」を入力してください。",
     ER001_CERTIFICATION_ID = "「資格」を入力してください。",
     ER004_CERTIFICATION_ID = "「資格」は存在していません。",
-    // ER005_CERTIFICATION_START_DATE = "「資格交付日」をyyyy/MM/dd形式で入力してください。",
-    // ER005_CERTIFICATION_END_DATE = "「失効日」をyyyy/MM/dd形式で入力してください。",
+    ER005_CERTIFICATION_START_DATE = "「資格交付日」をyyyy/MM/dd形式で入力してください。",
+    ER005_CERTIFICATION_END_DATE = "「失効日」をyyyy/MM/dd形式で入力してください。",
     ER012_CERTIFICATION_START_DATE_END_DATE = "「失効日」は「資格交付日」より未来の日で入力してください。",
     ER018_CERTIFICATION_SCORE = "「点数」は半角で入力してください。",
     ER018_CERTIFICATION_ID = "「資格」は半角で入力してください。",
 
-    // ER023 = "システムエラーが発生しました。",
+    // System error
+    ER023 = "システムエラーが発生しました。",
 
     // Validate confirm password
     ER001_EMPLOYEE_LOGIN_CONFIRM_PASSWORD = "「パスワード（確認）」を入力してください。",
