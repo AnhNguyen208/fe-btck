@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,7 +41,8 @@ export class Adm004Component implements OnInit {
     private departmentService: DepartmentService,
     private certificationService: CertificationService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe,
   ) {
     this.form = this.fb.group({
       employeeName: ['', [Validators.required, Validators.maxLength(125)]],
@@ -108,7 +110,7 @@ export class Adm004Component implements OnInit {
 
     if (value) {
       let employee = JSON.parse(value);
-
+    
       this.form.setValue({
         employeeName: employee.employeeName,
         employeeBirthDate: new Date(employee.employeeBirthDate) ? new Date(employee.employeeBirthDate) : '',
@@ -122,12 +124,12 @@ export class Adm004Component implements OnInit {
         departmentName: employee.departmentName,
         certificationId: employee.certificationId,
         certificationName: employee.certificationName,
-        startDate: new Date(employee.startDate) ? new Date(employee.startDate) : '',
-        endDate: new Date(employee.endDate) ? new Date(employee.endDate) : '',
-        score: employee.score
+        startDate:  employee.startDate && new Date(employee.startDate) ? new Date(employee.startDate) : '',
+        endDate: employee.endDate && new Date(employee.endDate) ? new Date(employee.endDate) : '',
+        score: employee.score ? employee.score : ''
       });
 
-      sessionStorage.removeItem("employee");
+      // sessionStorage.removeItem("employee");
 
       console.log(this.form.value);
 
@@ -301,6 +303,9 @@ export class Adm004Component implements OnInit {
 
   submit() {
     if (this.form.valid) {
+      this.form.value.departmentName = '';
+      this.form.value.certificationName = '';
+
       this.departments.forEach((value) => {
         if (value.departmentId == this.form.value.departmentId) {
           this.form.value.departmentName = value.departmentName;
@@ -314,7 +319,7 @@ export class Adm004Component implements OnInit {
       });
 
       sessionStorage.setItem("employee", JSON.stringify(this.form.value));
-      this.router.navigate(['/user/adm005']);
+      this.router.navigate(['user/adm005']);
     } else {
       // Mark all fields as touched to show validation errors
       this.form.markAllAsTouched();

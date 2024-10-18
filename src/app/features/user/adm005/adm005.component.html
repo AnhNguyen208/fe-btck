@@ -3,6 +3,9 @@
         <div class="row">
             <form class="c-form box-shadow" [formGroup]="form" (ngSubmit)="submit()">
                 <ul class="show-data">
+                    <li *ngIf="errorMessage !== ''" class="box-err">
+                        <div class="box-err-content">Error message: {{errorMessage}}</div>
+                    </li>
                     <li class="title">
                         <p>情報確認</p>
                         <p>入力された情報をＯＫボタンクリックでＤＢへ保存してください</p>
