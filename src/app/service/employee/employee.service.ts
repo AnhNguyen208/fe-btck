@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConstants } from 'src/app/app-constants';
+import { EmployeeRequest } from 'src/app/model/employeeRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +51,10 @@ export class EmployeeService {
       }
 
       return this.http.get<any>(this.apiUrl, { params });
+  }
+
+  add(request: EmployeeRequest): Observable<any> {
+
+    return this.http.post<any>(this.apiUrl, request);
   }
 }
