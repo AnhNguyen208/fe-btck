@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DepartmentService } from 'src/app/service/department/department.service';
 import { Deaprtment } from 'src/app/model/department';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -36,10 +36,18 @@ export class UserListComponent {
     });
   }
 
+  @ViewChild('firstInput')
+  firstInputElement!: ElementRef;
+
   ngOnInit(): void {
     this.getDepartments();
     this.getEmployees();
   };
+
+  ngAfterViewInit(): void {
+    // Focus vào phần tử đầu tiên sau khi view được khởi tạo
+    this.firstInputElement.nativeElement.focus();
+  }
 
   /**
    * Lấy danh sách department
