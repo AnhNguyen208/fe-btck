@@ -15,14 +15,14 @@ export class UserListComponent {
   departments: Deaprtment[] = [];
   employees: Employee[] = [];
   form: FormGroup<any>;
-  currentPage:number = 1;
-  pages:number[] = [];
-  totalPages:number = 0;
-  totalRecords:number = 0;
-  limit:number = 5;
-  ord_employee_name:string = 'ASC';
-  ord_certification_name:string = 'ASC';
-  ord_end_date:string = 'ASC';
+  currentPage: number = 1;
+  pages: number[] = [];
+  totalPages: number = 0;
+  totalRecords: number = 0;
+  limit: number = 5;
+  ord_employee_name: string = 'ASC';
+  ord_certification_name: string = 'ASC';
+  ord_end_date: string = 'ASC';
 
   constructor(
     private router: Router,
@@ -34,66 +34,78 @@ export class UserListComponent {
       departmentId: [''],
       employeeName: ['', [Validators.maxLength(125)]],
     });
-   }
+  }
 
   ngOnInit(): void {
     this.getDepartments();
     this.getEmployees();
   };
 
+  /**
+   * Lấy danh sách department
+   */
   getDepartments() {
     this.departmentService.getAll()
-    .subscribe({
-      next: (response) => {
-        console.log(response);
-        this.departments = response.departments;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-      complete: () => {
-        console.log('complete');
-      }
-    });
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+          this.departments = response.departments;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          console.log('complete');
+        }
+      });
   }
 
+  /**
+   * Lấy danh sách employee
+   */
   getEmployees() {
     this.employeeService.getAll(this.form.value.employeeName,
       this.form.value.departmentId, this.ord_employee_name,
       this.ord_certification_name, this.ord_end_date, (this.currentPage - 1) * this.limit, this.limit)
-    .subscribe({
-      next: (response) => {
-        console.log(response);
-        this.employees = response.employees;
-        this.totalRecords = response.totalRecords;
-        this.totalPages = Math.ceil(this.totalRecords / this.limit);
-        
-        console.log(this.totalPages);
-        console.log(this.employees.length);
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+          this.employees = response.employees;
+          this.totalRecords = response.totalRecords;
+          this.totalPages = Math.ceil(this.totalRecords / this.limit);
 
-        if(this.employees.length === 0 && this.currentPage > 1) {
-          this.changePage(this.currentPage - 1);
+          console.log(this.totalPages);
+          console.log(this.employees.length);
+
+          if (this.employees.length === 0 && this.currentPage > 1) {
+            this.changePage(this.currentPage - 1);
+          }
+
+          this.paginationPages();
+        },
+        error: (error) => {
+          console.log(error);
+          this.router.navigate(['SystemErrorComponent'])
+        },
+        complete: () => {
+          console.log('complete');
         }
-
-        this.paginationPages();
-      },
-      error: (error) => {
-        console.log(error);
-        this.router.navigate(['SystemErrorComponent'])
-      },
-      complete: () => {
-        console.log('complete');
-      }
-    });
+      });
   }
 
+  /**
+   * Tìm kiếm employee và quay về trang 1
+   */
   search() {
-   this.currentPage = 1;
-   this.getEmployees();
+    this.currentPage = 1;
+    this.getEmployees();
   }
 
+  /**
+   * Thay đổi cách sắp xếp danh sách employee theo employeeName
+   */
   changeOrderEmployeeName() {
-    if(this.ord_employee_name === 'ASC') {
+    if (this.ord_employee_name === 'ASC') {
       this.ord_employee_name = 'DESC';
     } else {
       this.ord_employee_name = 'ASC'
@@ -102,9 +114,12 @@ export class UserListComponent {
     this.search();
   }
 
+  /**
+   * Thay đổi cách sắp xếp danh sách employee theo certificationName
+   */
   changeOrderCertificationName() {
     console.log(this.ord_certification_name);
-    if(this.ord_certification_name === 'ASC') {
+    if (this.ord_certification_name === 'ASC') {
       this.ord_certification_name = 'DESC';
     } else {
       this.ord_certification_name = 'ASC'
@@ -113,8 +128,11 @@ export class UserListComponent {
     this.search();
   }
 
+  /**
+   * Thay đổi cách sắp xếp danh sách employee theo endDate
+   */
   changeOrderEndDate() {
-    if(this.ord_end_date === 'ASC') {
+    if (this.ord_end_date === 'ASC') {
       this.ord_end_date = 'DESC';
     } else {
       this.ord_end_date = 'ASC'
@@ -123,30 +141,36 @@ export class UserListComponent {
     this.search();
   }
 
+  /**
+   * Xử lí hiển thị pagination
+   */
   paginationPages() {
     this.pages = [];
     const total = this.totalPages;
 
     if (total > 1) {
-      if(this.currentPage > 1 && this.currentPage < total) {
+      if (this.currentPage > 1 && this.currentPage < total) {
         this.pages.push(this.currentPage - 1);
         this.pages.push(this.currentPage);
         this.pages.push(this.currentPage + 1);
       }
 
-      if(this.currentPage === 1) {
+      if (this.currentPage === 1) {
         this.pages.push(2);
       }
 
-      if(this.currentPage === this.totalPages) {
+      if (this.currentPage === this.totalPages) {
         this.pages.push(this.totalPages - 1);
       }
-  
+
       this.pages = this.pages.filter(item => item !== 1);
       this.pages = this.pages.filter(item => item !== this.totalPages);
     }
   }
 
+  /**
+   * Xử lí hiển thị danh sách employee khi chuyển trang
+   */
   changePage(page: number) {
     this.currentPage = page;
     this.getEmployees();

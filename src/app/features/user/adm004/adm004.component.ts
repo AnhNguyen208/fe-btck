@@ -75,6 +75,9 @@ export class Adm004Component implements OnInit {
     this.loadEmployee();
   }
 
+  /**
+   * Lấy danh sách department
+   */
   getDepartments() {
     this.departmentService.getAll().subscribe({
       next: (response) => {
@@ -90,6 +93,9 @@ export class Adm004Component implements OnInit {
     });
   }
 
+  /**
+   * Lấy danh sách certification
+   */
   getCertifications() {
     this.certificationService.getAll().subscribe({
       next: (response) => {
@@ -105,6 +111,9 @@ export class Adm004Component implements OnInit {
     });
   }
 
+   /**
+   * Hiển thị thông tin employee (nếu có)
+   */
   loadEmployee() {
     const value = sessionStorage.getItem("employee");
 
@@ -142,6 +151,9 @@ export class Adm004Component implements OnInit {
 
   }
 
+  /**
+   * Kiểm tra thông tin employee đã nhập có hợp lệ không
+   */
   validateForm() {
     // console.log(this.form);
 
@@ -203,7 +215,7 @@ export class Adm004Component implements OnInit {
       (this.form.get('employeeLoginConfirmPassword') && this.form?.errors?.['passwordMismatch'])) {
       this.validateField('employeeLoginConfirmPassword',
         ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD, '', '', '', 
-        "パスワード và パスワードの確認 không khớp", '', ''
+        ErrorMessages.ER017_EMPLOYEE_LOGIN_CONFIRM_PASSWORD, '', ''
       );
     }
 
@@ -229,10 +241,16 @@ export class Adm004Component implements OnInit {
     }
   }
 
+  /**
+   * Kiểm tra trường thông tin đã được click vào và không hợp lệ không
+   */
   isTouchedAndInvalid(field: string) {
     return this.form.get(field)?.touched && this.form.get(field)?.invalid;
   }
 
+  /**
+   * Kiểm tra trường thông tin có hợp lệ không
+   */
   validateField(field: string, error1: string, error2: string, error3: string, error4: string, error5: string, error6: string, error7: string) {
     if (this.form.get(field)?.errors?.['required'] && error1) {
       this.errorMessage[field] = error1;
@@ -251,12 +269,18 @@ export class Adm004Component implements OnInit {
     }
   }
 
+  /**
+   * Kiểm tra trường password và confirmPassword có trùng khớp hay không
+   */
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('employeeLoginPassword')?.value;
     const confirmPassword = control.get('employeeLoginConfirmPassword')?.value;
     return password === confirmPassword ? null : { passwordMismatch: true };
   }
 
+  /**
+   * Kiểm tra trường startDate và endDate có hợp lệ không
+   */
   dateOrderValidator(control: AbstractControl): ValidationErrors | null {
     const startDate = control.get('startDate')?.value;
     const endDate = control.get('endDate')?.value;
@@ -267,6 +291,9 @@ export class Adm004Component implements OnInit {
     return end < start ? { dateInvalid: true } : null;
   }
 
+  /**
+   * Kiểm tra giá trị có phải số nguyên dương không
+   */
   positiveIntegerValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
     if (value) {
@@ -277,6 +304,9 @@ export class Adm004Component implements OnInit {
     return null;
   }
 
+  /**
+   * Xử lí khi chọn certificationId và không chọn certificationId
+   */
   onCertificationIdChange() {
     if (this.form.get('certificationId')?.value) {
       this.form.get('startDate')?.enable();
@@ -301,6 +331,9 @@ export class Adm004Component implements OnInit {
     this.form.get('score')?.updateValueAndValidity();
   }
 
+  /**
+   * Xử lí khi submit form
+   */
   submit() {
     if (this.form.valid) {
       this.form.value.departmentName = '';

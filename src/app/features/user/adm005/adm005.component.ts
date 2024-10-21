@@ -27,6 +27,9 @@ export class Adm005Component implements OnInit{
     this.loadEmployee();
   }
 
+  /**
+   * Hiển thị thông tin employee từ ADM004
+   */
   loadEmployee() {
     const value = sessionStorage.getItem("employee");
     if(value) {
@@ -35,6 +38,9 @@ export class Adm005Component implements OnInit{
     }
   }
 
+  /**
+   * Xử lí khi submit form
+   */
   submit() {
     let birthdate = this.datePipe.transform(this.form.value.employeeBirthDate, 'yyyy/MM/dd')?.toString() || '';
     let startDate = this.datePipe.transform(this.form.value.startDate, 'yyyy/MM/dd')?.toString() || '';
