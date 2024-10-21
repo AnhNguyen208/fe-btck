@@ -11,6 +11,10 @@ export class CertificationService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Gọi Api ListCertifications 
+   * @returns List certifications
+   */
   getAll(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
   }

@@ -35,26 +35,26 @@
                     <li class="title mt-12"><a href="#!">日本語能力</a></li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">資格</label>
-                        <div class="col-sm col-sm-10">{{employeeDetail?.certifications[0].certificationName}}</div>
+                        <div class="col-sm col-sm-10">{{employeeDetail?.certifications[0]?.certificationName}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">資格交付日</label>
-                        <div class="col-sm col-sm-10">{{employeeDetail?.certifications[0].startDate}}</div>
+                        <div class="col-sm col-sm-10">{{employeeDetail?.certifications[0]?.startDate}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">失効日</label>
-                        <div class="col-sm col-sm-10">{{employeeDetail?.certifications[0].endDate}}</div>
+                        <div class="col-sm col-sm-10">{{employeeDetail?.certifications[0]?.endDate}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">点数</label>
-                        <div class="col-sm col-sm-10">{{employeeDetail?.certifications[0].score}}</div>
+                        <div class="col-sm col-sm-10">{{employeeDetail?.certifications[0]?.score}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <div class="btn-group col-sm col-sm-10 ml">
                             <button type="button" class="btn btn-primary btn-sm"
                                 (click)="onClickEditButton(employeeDetail.employeeId)">編集</button>
                             <button type="button" class="btn btn-secondary btn-sm"
-                                (click)="onClickDeleteButton()">削除</button>
+                                (click)="onClickDeleteButton(employeeDetail.employeeId)">削除</button>
                             <button type="button" class="btn btn-secondary btn-sm"
                                 [routerLink]="['/user/list']">戻る</button>
                         </div>

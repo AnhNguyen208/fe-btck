@@ -12,6 +12,17 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Gọi Api ListEmployees
+   * @param employee_name 
+   * @param department_id 
+   * @param ord_employee_name 
+   * @param ord_certification_name 
+   * @param ord_end_date 
+   * @param offset 
+   * @param limit 
+   * @returns List employees
+   */
   getAll(
     employee_name: string,
     department_id: string,
@@ -53,11 +64,21 @@ export class EmployeeService {
     return this.http.get<any>(this.apiUrl, { params });
   }
 
+  /**
+   * Gọi Api AddEmployee
+   * @param request 
+   * @returns EmployeeId vừa thêm mới
+   */
   add(request: EmployeeRequest): Observable<any> {
 
     return this.http.post<any>(this.apiUrl, request);
   }
 
+  /**
+   * Gọi Api getEmloyee
+   * @param id EmployeeId muốn lấy thông tin
+   * @returns Thông tin employee
+   */
   getById(id: number) {
 
     return this.http.get<any>(`${this.apiUrl}/${id}`)

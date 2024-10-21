@@ -140,6 +140,10 @@ export class Adm004Component implements OnInit {
     }
   }
 
+   /**
+   * Lấy thông tin chi tiết của employee từ EmployeeService
+   * @param id EmployeeId muốn lấy thông tin
+   */
   getDetailEmployee(id: number) {
     this.employeeService.getById(id).subscribe({
       next: (response) => {
@@ -159,17 +163,11 @@ export class Adm004Component implements OnInit {
     });
   }
 
+  /**
+   * Set giá trị cho form
+   * @param employee Thông tin employee
+   */
   setFormValue(employee: any) {
-    let certificationId = employee.certificationId ? employee.certificationId :
-      employee.certifications[0].certificationId ? employee.certifications[0].certificationId : '';
-    let certificationName = employee.certificationName ? employee.certificationName :
-      employee.certifications[0].certificationName ? employee.certifications[0].certificationName : '';
-    let startDate = new Date(employee.startDate) ? new Date(employee.startDate) :
-      new Date(employee.certifications[0].startDate) ? new Date(employee.certifications[0].startDate) : '';
-    let endDate = new Date(employee.endDate) ? new Date(employee.endDate) :
-      new Date(employee.certifications[0].endDate) ? new Date(employee.certifications[0].endDate) : '';
-    let score = employee.score ? employee.score :
-      employee.certifications[0].score ? employee.certifications[0].score : '';
 
     this.form.patchValue({
       employeeName: employee.employeeName,
@@ -182,22 +180,30 @@ export class Adm004Component implements OnInit {
       employeeLoginConfirmPassword: employee.employeeLoginPassword ? employee.employeeLoginPassword : '',
       departmentId: employee.departmentId,
       departmentName: employee.departmentName,
-      certificationId: certificationId,
-      certificationName: certificationName,
     });
 
-    this.onCertificationIdChange();
+    if (employee.certificationId || employee.certifications) {
+      let certificationId = employee.certificationId ? employee.certificationId :
+        employee.certifications[0] ? employee.certifications[0].certificationId : '';
+      let certificationName = employee.certificationName ? employee.certificationName :
+        employee.certifications[0] ? employee.certifications[0].certificationName : '';
+      let startDate = employee.startDate && new Date(employee.startDate) ? new Date(employee.startDate) :
+        employee.certifications[0] && new Date(employee.certifications[0].startDate) ? new Date(employee.certifications[0].startDate) : '';
+      let endDate = employee.endDate && new Date(employee.endDate) ? new Date(employee.endDate) :
+        employee.certifications[0] && new Date(employee.certifications[0].endDate) ? new Date(employee.certifications[0].endDate) : '';
+      let score = employee.score ? employee.score :
+        employee.certifications[0] ? employee.certifications[0].score : '';
 
-    this.form.patchValue({
-      startDate: startDate,
-      endDate: endDate,
-      score: score,
-    });
+      this.form.patchValue({
+        certificationId: certificationId,
+        certificationName: certificationName,
+        startDate: startDate,
+        endDate: endDate,
+        score: score,
+      });
 
-    console.log(new Date(employee.employeeBirthDate));
-    console.log(new Date(employee.certifications[0]));
-
-    console.log(this.form.value.startDate);
+      this.onCertificationIdChange();
+    }
   }
 
   /**

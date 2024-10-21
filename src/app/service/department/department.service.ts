@@ -11,6 +11,10 @@ export class DepartmentService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Gọi Api ListDepartments 
+   * @returns List departments
+   */
   getAll(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
   }

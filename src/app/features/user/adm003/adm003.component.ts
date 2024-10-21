@@ -13,11 +13,8 @@ export class Adm003Component implements OnInit {
     private router: Router,
     private employeeService: EmployeeService
   ) { }
-  ngOnInit(): void {
-    this.loadEmployee();
-  }
 
-  loadEmployee() {
+  ngOnInit(): void {
     const state = history.state;
 
     if (state && state.data) {
@@ -28,6 +25,10 @@ export class Adm003Component implements OnInit {
     }
   }
 
+  /**
+   * Lấy thông tin chi tiết của employee từ EmployeeService
+   * @param id EmployeeId muốn lấy thông tin
+   */
   getDetailEmployee (id: number) {
     this.employeeService.getById(id).subscribe({
       next: (response) => {
@@ -49,12 +50,20 @@ export class Adm003Component implements OnInit {
     });
   }
 
+  /**
+   * Chuyển sang màn hình ADM004 Edit
+   * @param id EmployeeId muốn chỉnh sửa
+   */
   onClickEditButton(id: number) {
     const data = { id: id };
     this.router.navigate(['/user/adm004'], { state: { data: data } });
   }
 
-  onClickDeleteButton() {
+  /**
+   * Xóa employee
+   * @param id EmployeeId muốn xóa
+   */
+  onClickDeleteButton(id: number) {
 
   }
 }
