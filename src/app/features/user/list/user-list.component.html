@@ -58,7 +58,7 @@
         <div class="css-grid-table-body">
           <ng-container *ngFor="let item of employees">
             <div class="bor-l-none">
-              <a routerLink="/user/detail">{{item.employeeId}}</a>
+              <a style="cursor: pointer; text-decoration: underline;" (click)="getDetail(item.employeeId)">{{item.employeeId}}</a>
             </div>
             <div>{{item.employeeName}}</div>
             <div>{{item.employeeBirthDate | date: 'yyyy/MM/dd'}}</div>

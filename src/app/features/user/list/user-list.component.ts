@@ -48,14 +48,14 @@ export class UserListComponent {
     this.departmentService.getAll()
       .subscribe({
         next: (response) => {
-          console.log(response);
+          // console.log(response);
           this.departments = response.departments;
         },
         error: (error) => {
           console.log(error);
         },
         complete: () => {
-          console.log('complete');
+          // console.log('complete');
         }
       });
   }
@@ -69,13 +69,13 @@ export class UserListComponent {
       this.ord_certification_name, this.ord_end_date, (this.currentPage - 1) * this.limit, this.limit)
       .subscribe({
         next: (response) => {
-          console.log(response);
+          // console.log(response);
           this.employees = response.employees;
           this.totalRecords = response.totalRecords;
           this.totalPages = Math.ceil(this.totalRecords / this.limit);
 
-          console.log(this.totalPages);
-          console.log(this.employees.length);
+          // console.log(this.totalPages);
+          // console.log(this.employees.length);
 
           if (this.employees.length === 0 && this.currentPage > 1) {
             this.changePage(this.currentPage - 1);
@@ -88,7 +88,7 @@ export class UserListComponent {
           this.router.navigate(['SystemErrorComponent'])
         },
         complete: () => {
-          console.log('complete');
+          // console.log('complete');
         }
       });
   }
@@ -174,5 +174,10 @@ export class UserListComponent {
   changePage(page: number) {
     this.currentPage = page;
     this.getEmployees();
+  }
+
+  getDetail(id: number) {
+    const data = { id: id };
+    this.router.navigate(['/user/adm003'], { state: { data: data } });
   }
 }

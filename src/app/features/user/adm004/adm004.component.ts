@@ -7,6 +7,7 @@ import { Deaprtment } from 'src/app/model/department';
 import { ErrorMessages } from 'src/app/model/error-messages';
 import { CertificationService } from 'src/app/service/certification/certification.service';
 import { DepartmentService } from 'src/app/service/department/department.service';
+import { EmployeeService } from 'src/app/service/employee/employee.service';
 
 @Component({
   selector: 'app-adm004',
@@ -43,6 +44,7 @@ export class Adm004Component implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private datePipe: DatePipe,
+    private employeeService: EmployeeService,
   ) {
     this.form = this.fb.group({
       employeeName: ['', [Validators.required, Validators.maxLength(125)]],
@@ -111,44 +113,91 @@ export class Adm004Component implements OnInit {
     });
   }
 
-   /**
-   * Hiển thị thông tin employee (nếu có)
-   */
+  /**
+  * Hiển thị thông tin employee (nếu có)
+  */
   loadEmployee() {
     const value = sessionStorage.getItem("employee");
 
     if (value) {
       let employee = JSON.parse(value);
-    
-      this.form.setValue({
-        employeeName: employee.employeeName,
-        employeeBirthDate: new Date(employee.employeeBirthDate) ? new Date(employee.employeeBirthDate) : '',
-        employeeEmail: employee.employeeEmail,
-        employeeTelephone: employee.employeeTelephone,
-        employeeNameKana: employee.employeeNameKana,
-        employeeLoginId: employee.employeeLoginId,
-        employeeLoginPassword: employee.employeeLoginPassword,
-        employeeLoginConfirmPassword: employee.employeeLoginPassword,
-        departmentId: employee.departmentId,
-        departmentName: employee.departmentName,
-        certificationId: employee.certificationId,
-        certificationName: employee.certificationName,
-        startDate:  employee.startDate && new Date(employee.startDate) ? new Date(employee.startDate) : '',
-        endDate: employee.endDate && new Date(employee.endDate) ? new Date(employee.endDate) : '',
-        score: employee.score ? employee.score : ''
-      });
 
-      // sessionStorage.removeItem("employee");
+      this.setFormValue(employee);
 
-      console.log(this.form.value);
+      sessionStorage.removeItem("employee");
+
+      // console.log(this.form.value);
 
     } else {
-      this.activeRoute.params.subscribe(params => {
-        this.id = params['id'];
-        // Làm gì đó với id
-      });
-    }
+      const state = history.state;
 
+      if (state && state.data) {
+        console.log('User ID:', state.data.id);
+        this.getDetailEmployee(state.data.id)
+      } else {
+        console.log('No data passed in state');
+      }
+    }
+  }
+
+  getDetailEmployee(id: number) {
+    this.employeeService.getById(id).subscribe({
+      next: (response) => {
+        console.log(response);
+        if (response.code == "200") {
+          this.setFormValue(response);
+
+        } else {
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        // console.log('complete');
+      }
+    });
+  }
+
+  setFormValue(employee: any) {
+    let certificationId = employee.certificationId ? employee.certificationId :
+      employee.certifications[0].certificationId ? employee.certifications[0].certificationId : '';
+    let certificationName = employee.certificationName ? employee.certificationName :
+      employee.certifications[0].certificationName ? employee.certifications[0].certificationName : '';
+    let startDate = new Date(employee.startDate) ? new Date(employee.startDate) :
+      new Date(employee.certifications[0].startDate) ? new Date(employee.certifications[0].startDate) : '';
+    let endDate = new Date(employee.endDate) ? new Date(employee.endDate) :
+      new Date(employee.certifications[0].endDate) ? new Date(employee.certifications[0].endDate) : '';
+    let score = employee.score ? employee.score :
+      employee.certifications[0].score ? employee.certifications[0].score : '';
+
+    this.form.patchValue({
+      employeeName: employee.employeeName,
+      employeeBirthDate: new Date(employee.employeeBirthDate) ? new Date(employee.employeeBirthDate) : '',
+      employeeEmail: employee.employeeEmail,
+      employeeTelephone: employee.employeeTelephone,
+      employeeNameKana: employee.employeeNameKana,
+      employeeLoginId: employee.employeeLoginId,
+      employeeLoginPassword: employee.employeeLoginPassword ? employee.employeeLoginPassword : '',
+      employeeLoginConfirmPassword: employee.employeeLoginPassword ? employee.employeeLoginPassword : '',
+      departmentId: employee.departmentId,
+      departmentName: employee.departmentName,
+      certificationId: certificationId,
+      certificationName: certificationName,
+    });
+
+    this.onCertificationIdChange();
+
+    this.form.patchValue({
+      startDate: startDate,
+      endDate: endDate,
+      score: score,
+    });
+
+    console.log(new Date(employee.employeeBirthDate));
+    console.log(new Date(employee.certifications[0]));
+
+    console.log(this.form.value.startDate);
   }
 
   /**
@@ -160,7 +209,7 @@ export class Adm004Component implements OnInit {
     if (this.isTouchedAndInvalid('employeeLoginId')) {
       this.validateField('employeeLoginId',
         ErrorMessages.ER001_EMPLOYEE_LOGIN_ID, ErrorMessages.ER006_EMPLOYEE_LOGIN_ID,
-        ErrorMessages.ER019_EMPLOYEE_LOGIN_ID, '', '','', ''
+        ErrorMessages.ER019_EMPLOYEE_LOGIN_ID, '', '', '', ''
       );
     }
 
@@ -206,7 +255,7 @@ export class Adm004Component implements OnInit {
 
     if (this.isTouchedAndInvalid('employeeLoginPassword')) {
       this.validateField('employeeLoginPassword',
-        ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD, '', '', 
+        ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD, '', '',
         ErrorMessages.ER007_EMPLOYEE_LOGIN_PASSWORD, '', '', ''
       );
     }
@@ -214,7 +263,7 @@ export class Adm004Component implements OnInit {
     if (this.isTouchedAndInvalid('employeeLoginConfirmPassword') ||
       (this.form.get('employeeLoginConfirmPassword') && this.form?.errors?.['passwordMismatch'])) {
       this.validateField('employeeLoginConfirmPassword',
-        ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD, '', '', '', 
+        ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD, '', '', '',
         ErrorMessages.ER017_EMPLOYEE_LOGIN_CONFIRM_PASSWORD, '', ''
       );
     }
@@ -235,7 +284,7 @@ export class Adm004Component implements OnInit {
 
     if (this.isTouchedAndInvalid('score')) {
       this.validateField('score',
-        ErrorMessages.ER001_CERTIFICATION_SCORE, '', '', '', '', '', 
+        ErrorMessages.ER001_CERTIFICATION_SCORE, '', '', '', '', '',
         ErrorMessages.ER018_CERTIFICATION_SCORE
       );
     }

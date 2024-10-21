@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Adm004Component } from './adm004/adm004.component';
 import { Adm005Component } from './adm005/adm005.component';
 import { Adm006Component } from './adm006/adm006.component';
+import { Adm003Component } from './adm003/adm003.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { Adm006Component } from './adm006/adm006.component';
     Adm004Component,
     Adm005Component,
     Adm006Component,
+    Adm003Component,
   ],
   imports: [
     BrowserAnimationsModule,
