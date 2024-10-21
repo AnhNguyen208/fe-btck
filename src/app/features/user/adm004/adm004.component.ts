@@ -140,7 +140,7 @@ export class Adm004Component implements OnInit {
     }
   }
 
-   /**
+  /**
    * Lấy thông tin chi tiết của employee từ EmployeeService
    * @param id EmployeeId muốn lấy thông tin
    */

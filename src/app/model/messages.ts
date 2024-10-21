@@ -51,6 +51,11 @@ export enum ErrorMessages {
     ER018_CERTIFICATION_SCORE = "「点数」は半角で入力してください。",
     ER018_CERTIFICATION_ID = "「資格」は半角で入力してください。",
 
+    // 1.10 Validate parameter [employeeId]
+    ER001_EMPLOYEE_ID = "「ID」を入力してください。",
+    ER013_EMPLOYEE_ID = "該当するユーザは存在していません。",
+    ER014_EMPLOYEE_ID = "該当するユーザは存在していません。",
+
     // System error
     ER023 = "システムエラーが発生しました。",
 
