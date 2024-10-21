@@ -4,7 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { ActivatedRoute, Router } from '@angular/router';
 import { Certification } from 'src/app/model/certification';
 import { Deaprtment } from 'src/app/model/department';
-import { ErrorMessages } from 'src/app/model/error-messages';
+import { ErrorMessages } from 'src/app/model/messages';
 import { CertificationService } from 'src/app/service/certification/certification.service';
 import { DepartmentService } from 'src/app/service/department/department.service';
 import { EmployeeService } from 'src/app/service/employee/employee.service';

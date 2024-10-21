@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Message } from 'src/app/model/messages';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
 
 @Component({
@@ -64,6 +65,25 @@ export class Adm003Component implements OnInit {
    * @param id EmployeeId muốn xóa
    */
   onClickDeleteButton(id: number) {
+    if (window.confirm(Message.CONFIRM_MESSSAGE)) {
+      this.employeeService.deleteById(id).subscribe({
+        next: (response) => {
+          // console.log(response);
+          if(response.code == "200") {
+            const data = {message: "ユーザの削除が完了しました。"}
+            this.router.navigate(['/user/adm006'], { state: { data: data } });
+          } else {
+            this.router.navigate(['**']);
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          // console.log('complete');
+        }
+      });
+    }
 
   }
 }

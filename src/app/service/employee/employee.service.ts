@@ -83,4 +83,14 @@ export class EmployeeService {
 
     return this.http.get<any>(`${this.apiUrl}/${id}`)
   }
+
+   /**
+   * Gọi Api deleteEmloyee
+   * @param id EmployeeId muốn xóa thông tin
+   * @returns Thông tin employee đã xóa
+   */
+   deleteById(id: number) {
+
+    return this.http.delete<any>(`${this.apiUrl}/${id}`)
+  }
 }

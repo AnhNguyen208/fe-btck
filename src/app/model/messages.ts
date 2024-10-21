@@ -58,3 +58,10 @@ export enum ErrorMessages {
     ER001_EMPLOYEE_LOGIN_CONFIRM_PASSWORD = "「パスワード（確認）」を入力してください。",
     ER017_EMPLOYEE_LOGIN_CONFIRM_PASSWORD = "「パスワード（確認）」が不正です。",
 }
+
+export enum Message {
+    CONFIRM_MESSSAGE = "削除しますが、よろしいでしょうか。",
+    ADD_SUCCESS = "ユーザの登録が完了しました。",
+    EDIT_SUCCESS = "ユーザの更新が完了しました。",
+    DELETE_SUCCESS = "ユーザの削除が完了しました。",
+}

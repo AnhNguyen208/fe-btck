@@ -18,7 +18,7 @@ export class Adm005Component implements OnInit{
     private fb: FormBuilder,
     private employeeService: EmployeeService,
     private datePipe: DatePipe,
-    private route: Router,
+    private router: Router,
   ) {
     this.form = this.fb.group({});
   }
@@ -79,7 +79,8 @@ export class Adm005Component implements OnInit{
       next: (response) => {
         console.log(response);
         if(response.code == "200") {
-          this.route.navigate(['user/adm006'])
+          const data = {message: "ユーザの更新が完了しました。"}
+          this.router.navigate(['/user/adm006'], { state: { data: data } });
         } else {
           this.errorMessage = response.message.code + ' ' + response.message.params[0];
           console.log(this.errorMessage);
