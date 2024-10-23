@@ -178,12 +178,16 @@ export class UserListComponent {
 
   /**
    * Xử lí hiển thị danh sách employee khi chuyển trang
+   * @param page trang muốn chọn
    */
   changePage(page: number) {
     this.currentPage = page;
     this.getEmployees();
   }
 
+  /**
+   * Chuyển sang màn hinh ADM003
+   */
   getDetail(id: number) {
     const data = { id: id };
     this.router.navigate(['/user/adm003'], { state: { data: data } });

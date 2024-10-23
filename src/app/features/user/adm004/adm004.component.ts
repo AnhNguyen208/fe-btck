@@ -133,7 +133,8 @@ export class Adm004Component implements OnInit {
 
       if (state && state.data) {
         console.log('User ID:', state.data.id);
-        this.getDetailEmployee(state.data.id)
+        this.getDetailEmployee(state.data.id);
+        this.onPasswordAndConfirmPasswordChange();
       } else {
         console.log('No data passed in state');
       }
@@ -384,6 +385,21 @@ export class Adm004Component implements OnInit {
     this.form.get('startDate')?.updateValueAndValidity();
     this.form.get('endDate')?.updateValueAndValidity();
     this.form.get('score')?.updateValueAndValidity();
+  }
+
+  /**
+   * Xử lí khi nhập employeeLoginPassword và employeeLoginConfirmPassword
+   */
+  onPasswordAndConfirmPasswordChange() {
+    if (this.form.get('employeeLoginPassword')?.value || this.form.get('employeeLoginConfirmPassword')?.value) {
+      this.form.get('employeeLoginPassword')?.setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(50)]);
+      this.form.get('employeeLoginConfirmPassword')?.setValidators(Validators.required);
+    } else {
+      this.form.get('employeeLoginPassword')?.clearValidators();
+      this.form.get('employeeLoginConfirmPassword')?.clearValidators();
+    }
+    this.form.get('employeeLoginPassword')?.updateValueAndValidity();
+    this.form.get('employeeLoginConfirmPassword')?.updateValueAndValidity();
   }
 
   /**
