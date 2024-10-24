@@ -29,7 +29,7 @@ export class Adm005Component implements OnInit{
   }
 
   /**
-   * Hiển thị thông tin employee từ ADM004
+   * Lấy thông tin employee từ sessionStorage
    */
   loadEmployee() {
     const value = sessionStorage.getItem("employee");
@@ -43,6 +43,19 @@ export class Adm005Component implements OnInit{
    * Xử lí khi submit form
    */
   submit() {
+    if (this.form.get('employeeId')?.value) {
+      this.editEmployee();
+    } else {
+      this.addEmployee();
+    }
+    
+  }
+
+  /**
+   * Gửi request thêm mới employyee đến BE
+   * Xử lý response nhận được từ BE
+   */
+  addEmployee() {
     let birthdate = this.datePipe.transform(this.form.value.employeeBirthDate, 'yyyy/MM/dd')?.toString() || '';
     let startDate = this.datePipe.transform(this.form.value.startDate, 'yyyy/MM/dd')?.toString() || '';
     let endDate = this.datePipe.transform(this.form.value.endDate, 'yyyy/MM/dd')?.toString() || '';
@@ -81,6 +94,66 @@ export class Adm005Component implements OnInit{
         console.log(response);
         if(response.code == "200") {
           const data = {message: Message.ADD_SUCCESS}
+          this.router.navigate(['/user/adm006'], { state: { data: data } });
+        } else {
+          this.errorMessage = response.message.code + ' ' + response.message.params[0];
+          console.log(this.errorMessage);
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.log('complete');
+      }
+    })
+  }
+
+  /**
+   * Gửi request chỉnh sửa employyee đến BE
+   * Xử lý response nhận được từ BE
+   */
+  editEmployee() {
+    let birthdate = this.datePipe.transform(this.form.value.employeeBirthDate, 'yyyy/MM/dd')?.toString() || '';
+    let startDate = this.datePipe.transform(this.form.value.startDate, 'yyyy/MM/dd')?.toString() || '';
+    let endDate = this.datePipe.transform(this.form.value.endDate, 'yyyy/MM/dd')?.toString() || '';
+    const employeeRequest: EmployeeRequest = this.form.value.certificationId !== "" ? {
+      employeeId: this.form.value.employeeId,
+      employeeName: this.form.value.employeeName,
+      employeeBirthDate: birthdate,
+      employeeEmail: this.form.value.employeeEmail,
+      employeeTelephone: this.form.value.employeeTelephone,
+      employeeNameKana: this.form.value.employeeNameKana,
+      employeeLoginId: this.form.value.employeeLoginId,
+      employeeLoginPassword: this.form.value.employeeLoginPassword,
+      departmentId: this.form.value.departmentId,
+      certifications: [
+        {
+          certificationId: this.form.value.certificationId,
+          certificationStartDate: startDate,
+          certificationEndDate: endDate,
+          employeeCertificationScore: this.form.value.score
+        }
+      ]
+    } : 
+    {
+      employeeId: this.form.value.employeeId,
+      employeeName: this.form.value.employeeName,
+      employeeBirthDate: birthdate,
+      employeeEmail: this.form.value.employeeEmail,
+      employeeTelephone: this.form.value.employeeTelephone,
+      employeeNameKana: this.form.value.employeeNameKana,
+      employeeLoginId: this.form.value.employeeLoginId,
+      employeeLoginPassword: this.form.value.employeeLoginPassword,
+      departmentId: this.form.value.departmentId,
+      certifications: []
+    }
+    ;
+    this.employeeService.edit(employeeRequest).subscribe({
+      next: (response) => {
+        console.log(response);
+        if(response.code == "200") {
+          const data = {message: Message.EDIT_SUCCESS}
           this.router.navigate(['/user/adm006'], { state: { data: data } });
         } else {
           this.errorMessage = response.message.code + ' ' + response.message.params[0];

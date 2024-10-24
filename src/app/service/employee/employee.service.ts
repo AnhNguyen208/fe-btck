@@ -21,7 +21,7 @@ export class EmployeeService {
    * @param ord_end_date 
    * @param offset 
    * @param limit 
-   * @returns List employees
+   * @returns response từ BE
    */
   getAll(
     employee_name: string,
@@ -67,7 +67,7 @@ export class EmployeeService {
   /**
    * Gọi Api AddEmployee
    * @param request 
-   * @returns EmployeeId vừa thêm mới
+   * @returns response từ BE
    */
   add(request: EmployeeRequest): Observable<any> {
 
@@ -75,9 +75,19 @@ export class EmployeeService {
   }
 
   /**
+   * Gọi Api AddEmployee
+   * @param request 
+   * @returns response từ BE
+   */
+  edit(request: EmployeeRequest): Observable<any> {
+
+    return this.http.put<any>(this.apiUrl, request);
+  }
+
+  /**
    * Gọi Api getEmloyee
    * @param id EmployeeId muốn lấy thông tin
-   * @returns Thông tin employee
+   * @returns response từ BE
    */
   getById(id: number) {
 
@@ -87,7 +97,7 @@ export class EmployeeService {
    /**
    * Gọi Api deleteEmloyee
    * @param id EmployeeId muốn xóa thông tin
-   * @returns Thông tin employee đã xóa
+   * @returns response từ BE
    */
    deleteById(id: number) {
 

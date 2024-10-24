@@ -1,7 +1,6 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Certification } from 'src/app/model/certification';
 import { Deaprtment } from 'src/app/model/department';
 import { ErrorMessages } from 'src/app/model/messages';
@@ -124,12 +123,14 @@ export class Adm004Component implements OnInit {
       this.setFormValue(employee);
 
       sessionStorage.removeItem("employee");
+      if (this.form.get('employeeId')?.value) {
+        this.onPasswordAndConfirmPasswordChange();
+      }
 
       // console.log(this.form.value);
 
     } else {
       const state = history.state;
-
       if (state && state.data) {
         console.log('User ID:', state.data.id);
         this.getDetailEmployee(state.data.id);
@@ -170,6 +171,7 @@ export class Adm004Component implements OnInit {
   setFormValue(employee: any) {
 
     this.form.patchValue({
+      employeeId: employee.employeeId,
       employeeName: employee.employeeName,
       employeeBirthDate: new Date(employee.employeeBirthDate) ? new Date(employee.employeeBirthDate) : '',
       employeeEmail: employee.employeeEmail,
