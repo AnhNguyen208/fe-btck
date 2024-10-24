@@ -22,6 +22,7 @@ export class Adm003Component implements OnInit {
       console.log('User ID:', state.data.id);
       this.getDetailEmployee(state.data.id)
     } else {
+      this.router.navigate(['**']);
       console.log('No data passed in state');
     }
   }
@@ -36,10 +37,9 @@ export class Adm003Component implements OnInit {
         // console.log(response);
         if (response.code == "200") {
           this.employeeDetail = response;
-
           // console.log(this.employeeDetail);
-          
         } else {
+          this.router.navigate(['**']);
         }
       },
       error: (error) => {

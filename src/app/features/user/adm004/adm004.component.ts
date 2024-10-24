@@ -84,7 +84,11 @@ export class Adm004Component implements OnInit {
     this.departmentService.getAll().subscribe({
       next: (response) => {
         // console.log(response);
-        this.departments = response.departments;
+        if (response.code == "200") {
+          this.departments = response.departments;
+        } else {
+          this.router.navigate(['**']);
+        }
       },
       error: (error) => {
         console.log(error);
@@ -102,7 +106,11 @@ export class Adm004Component implements OnInit {
     this.certificationService.getAll().subscribe({
       next: (response) => {
         // console.log(response);
-        this.certifications = response.certifications;
+        if (response.code == "200") {
+          this.certifications = response.certifications;
+        } else {
+          this.router.navigate(['**']);
+        }
       },
       error: (error) => {
         console.log(error);
@@ -153,8 +161,8 @@ export class Adm004Component implements OnInit {
         // console.log(response);
         if (response.code == "200") {
           this.setFormValue(response);
-
         } else {
+          this.router.navigate(['**']);
         }
       },
       error: (error) => {

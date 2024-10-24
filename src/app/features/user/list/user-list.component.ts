@@ -57,7 +57,11 @@ export class UserListComponent {
       .subscribe({
         next: (response) => {
           // console.log(response);
-          this.departments = response.departments;
+          if (response.code == "200") {
+            this.departments = response.departments;
+          } else {
+            this.router.navigate(['**']);
+          }
         },
         error: (error) => {
           console.log(error);
