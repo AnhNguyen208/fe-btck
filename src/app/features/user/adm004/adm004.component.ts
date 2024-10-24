@@ -288,7 +288,7 @@ export class Adm004Component implements OnInit {
     if ((this.isTouchedAndInvalid('employeeLoginConfirmPassword')) ||
       (this.form.get('employeeLoginConfirmPassword') && this.form?.errors?.['passwordMismatch'])) {
       if (this.form.get('employeeLoginConfirmPassword')?.errors?.['required']) {
-        this.errorMessage.employeeLoginConfirmPassword = ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD;
+        this.errorMessage.employeeLoginConfirmPassword = ErrorMessages.ER001_EMPLOYEE_LOGIN_CONFIRM_PASSWORD;
       } else if (this.form?.errors?.['passwordMismatch']) {
         this.errorMessage.employeeLoginConfirmPassword = ErrorMessages.ER017_EMPLOYEE_LOGIN_CONFIRM_PASSWORD;
       }
