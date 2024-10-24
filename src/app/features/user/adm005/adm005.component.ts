@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeRequest } from 'src/app/model/employeeRequest';
+import { Message } from 'src/app/model/messages';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
 
 @Component({
@@ -79,7 +80,7 @@ export class Adm005Component implements OnInit{
       next: (response) => {
         console.log(response);
         if(response.code == "200") {
-          const data = {message: "ユーザの更新が完了しました。"}
+          const data = {message: Message.ADD_SUCCESS}
           this.router.navigate(['/user/adm006'], { state: { data: data } });
         } else {
           this.errorMessage = response.message.code + ' ' + response.message.params[0];

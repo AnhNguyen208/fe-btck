@@ -98,8 +98,7 @@
                         <label class="col-form-label col-sm-2"><i class="relative">パスワード:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="employeeLoginPassword"
-                                minlength="8" maxlength="50"
+                            <input type="password" class="form-control" formControlName="employeeLoginPassword"
                                 [required]="isTouchedAndInvalid('employeeLoginPassword') ? true : false">
                             <div *ngIf="isTouchedAndInvalid('employeeLoginPassword')">
                                 <div class="error-message">{{errorMessage.employeeLoginPassword}}</div>
@@ -109,7 +108,7 @@
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2"><i class="relative">パスワード（確認）:</i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="employeeLoginConfirmPassword"
+                            <input type="password" class="form-control" formControlName="employeeLoginConfirmPassword"
                                 [required]="isTouchedAndInvalid('employeeLoginConfirmPassword') ? true : false">
                             <div *ngIf="isTouchedAndInvalid('employeeLoginConfirmPassword')">
                                 <div class="error-message">{{errorMessage.employeeLoginConfirmPassword}}</div>

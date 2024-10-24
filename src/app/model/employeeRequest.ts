@@ -1,6 +1,7 @@
 import { CertificationRequest } from "./certificationRequest";
 
 export interface EmployeeRequest {
+  employeeId?: string;
   employeeName: string;
   employeeBirthDate: string;
   employeeEmail: string;

@@ -38,15 +38,14 @@ export class Adm004Component implements OnInit {
   };
 
   constructor(
-    private activeRoute: ActivatedRoute,
     private departmentService: DepartmentService,
     private certificationService: CertificationService,
     private fb: FormBuilder,
     private router: Router,
-    private datePipe: DatePipe,
     private employeeService: EmployeeService,
   ) {
     this.form = this.fb.group({
+      employeeId: [''],
       employeeName: ['', [Validators.required, Validators.maxLength(125)]],
       employeeBirthDate: ['', [Validators.required]],
       employeeEmail: ['', [Validators.required, Validators.maxLength(125)]],
@@ -214,86 +213,101 @@ export class Adm004Component implements OnInit {
     // console.log(this.form);
 
     if (this.isTouchedAndInvalid('employeeLoginId')) {
-      this.validateField('employeeLoginId',
-        ErrorMessages.ER001_EMPLOYEE_LOGIN_ID, ErrorMessages.ER006_EMPLOYEE_LOGIN_ID,
-        ErrorMessages.ER019_EMPLOYEE_LOGIN_ID, '', '', '', ''
-      );
+      if (this.form.get('employeeLoginId')?.errors?.['required']) {
+        this.errorMessage.employeeLoginId = ErrorMessages.ER001_EMPLOYEE_LOGIN_ID;
+      } else if (this.form.get('employeeLoginId')?.errors?.['maxlength']) {
+        this.errorMessage.employeeLoginId = ErrorMessages.ER006_EMPLOYEE_LOGIN_ID;
+      } else if (this.form.get('employeeLoginId')?.errors?.['pattern']) {
+        this.errorMessage.employeeLoginId = ErrorMessages.ER019_EMPLOYEE_LOGIN_ID;
+      }
     }
 
     if (this.isTouchedAndInvalid('departmentId')) {
-      this.validateField('departmentId',
-        ErrorMessages.ER002_DEPARTMENT_ID, '', '', '', '', '', ''
-      );
+      if (this.form.get('departmentId')?.errors?.['required']) {
+        this.errorMessage.departmentId = ErrorMessages.ER002_DEPARTMENT_ID;
+      }
     }
 
     if (this.isTouchedAndInvalid('employeeName')) {
-      this.validateField('employeeName',
-        ErrorMessages.ER001_EMPLOYEE_NAME, ErrorMessages.ER006_EMPLOYEE_NAME,
-        '', '', '', '', ''
-      );
+      if (this.form.get('employeeName')?.errors?.['required']) {
+        this.errorMessage.employeeName = ErrorMessages.ER001_EMPLOYEE_NAME;
+      } else if (this.form.get('employeeName')?.errors?.['maxlength']) {
+        this.errorMessage.employeeName = ErrorMessages.ER006_EMPLOYEE_NAME;
+      }
     }
 
     if (this.isTouchedAndInvalid('employeeNameKana')) {
-      this.validateField('employeeNameKana',
-        ErrorMessages.ER001_EMPLOYEE_NAME_KANA, ErrorMessages.ER006_EMPLOYEE_NAME_KANA,
-        ErrorMessages.ER009_EMPLOYEE_NAME_KANA, '', '', '', ''
-      );
+      if (this.form.get('employeeNameKana')?.errors?.['required']) {
+        this.errorMessage.employeeNameKana = ErrorMessages.ER001_EMPLOYEE_NAME_KANA;
+      } else if (this.form.get('employeeNameKana')?.errors?.['maxlength']) {
+        this.errorMessage.employeeNameKana = ErrorMessages.ER006_EMPLOYEE_NAME_KANA;
+      } else if (this.form.get('employeeNameKana')?.errors?.['pattern']) {
+        this.errorMessage.employeeNameKana = ErrorMessages.ER009_EMPLOYEE_NAME_KANA;
+      }
     }
 
     if (this.isTouchedAndInvalid('employeeBirthDate')) {
-      this.validateField('employeeBirthDate',
-        ErrorMessages.ER001_EMPLOYEE_BIRTHDATE, '', '', '', '', '', ''
-      );
+      if (this.form.get('employeeBirthDate')?.errors?.['required']) {
+        this.errorMessage.employeeBirthDate = ErrorMessages.ER001_EMPLOYEE_BIRTHDATE;
+      }
     }
 
     if (this.isTouchedAndInvalid('employeeEmail')) {
-      this.validateField('employeeEmail',
-        ErrorMessages.ER001_EMPLOYEE_EMAIL, ErrorMessages.ER006_EMPLOYEE_EMAIL,
-        '', '', '', '', ''
-      );
+      if (this.form.get('employeeEmail')?.errors?.['required']) {
+        this.errorMessage.employeeEmail = ErrorMessages.ER001_EMPLOYEE_EMAIL;
+      } else if (this.form.get('employeeEmail')?.errors?.['maxlength']) {
+        this.errorMessage.employeeEmail = ErrorMessages.ER006_EMPLOYEE_EMAIL;
+      }
     }
 
     if (this.isTouchedAndInvalid('employeeTelephone')) {
-      this.validateField('employeeTelephone',
-        ErrorMessages.ER001_EMPLOYEE_TELEPHONE, ErrorMessages.ER006_EMPLOYEE_TELEPHONE,
-        ErrorMessages.ER008_EMPLOYEE_TELEPHONE, '', '', '', ''
-      );
+      if (this.form.get('employeeTelephone')?.errors?.['required']) {
+        this.errorMessage.employeeTelephone = ErrorMessages.ER001_EMPLOYEE_TELEPHONE;
+      } else if (this.form.get('employeeTelephone')?.errors?.['maxlength']) {
+        this.errorMessage.employeeTelephone = ErrorMessages.ER006_EMPLOYEE_TELEPHONE;
+      } else if (this.form.get('employeeTelephone')?.errors?.['pattern']) {
+        this.errorMessage.employeeTelephone = ErrorMessages.ER008_EMPLOYEE_TELEPHONE;
+      }
     }
 
     if (this.isTouchedAndInvalid('employeeLoginPassword')) {
-      this.validateField('employeeLoginPassword',
-        ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD, '', '',
-        ErrorMessages.ER007_EMPLOYEE_LOGIN_PASSWORD, '', '', ''
-      );
+      if (this.form.get('employeeLoginPassword')?.errors?.['required']) {
+        this.errorMessage.employeeLoginPassword = ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD;
+      } else if (this.form.get('employeeLoginPassword')?.errors?.['maxlength'] || this.form.get('employeeLoginPassword')?.errors?.['minlength']) {
+        this.errorMessage.employeeLoginPassword = ErrorMessages.ER007_EMPLOYEE_LOGIN_PASSWORD;
+      }
     }
 
-    if (this.isTouchedAndInvalid('employeeLoginConfirmPassword') ||
+    if ((this.isTouchedAndInvalid('employeeLoginConfirmPassword')) ||
       (this.form.get('employeeLoginConfirmPassword') && this.form?.errors?.['passwordMismatch'])) {
-      this.validateField('employeeLoginConfirmPassword',
-        ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD, '', '', '',
-        ErrorMessages.ER017_EMPLOYEE_LOGIN_CONFIRM_PASSWORD, '', ''
-      );
+      if (this.form.get('employeeLoginConfirmPassword')?.errors?.['required']) {
+        this.errorMessage.employeeLoginConfirmPassword = ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD;
+      } else if (this.form?.errors?.['passwordMismatch']) {
+        this.errorMessage.employeeLoginConfirmPassword = ErrorMessages.ER017_EMPLOYEE_LOGIN_CONFIRM_PASSWORD;
+      }
     }
 
     if (this.isTouchedAndInvalid('startDate')) {
-      this.validateField('startDate',
-        ErrorMessages.ER001_CERTIFICATION_START_DATE, '', '', '', '', '', ''
-      );
+      if (this.form.get('startDate')?.errors?.['required']) {
+        this.errorMessage.startDate = ErrorMessages.ER001_CERTIFICATION_START_DATE;
+      }
     }
 
-    if (this.isTouchedAndInvalid('endDate') ||
+    if ((this.isTouchedAndInvalid('endDate')) ||
       (this.form.get('endDate') && this.form?.errors?.['dateInvalid'])) {
-      this.validateField('endDate',
-        ErrorMessages.ER001_CERTIFICATION_END_DATE, '', '', '', '',
-        ErrorMessages.ER012_CERTIFICATION_START_DATE_END_DATE, ''
-      );
+      if (this.form.get('endDate')?.errors?.['required']) {
+        this.errorMessage.endDate = ErrorMessages.ER001_CERTIFICATION_END_DATE;
+      } else if (this.form?.errors?.['dateInvalid']) {
+        this.errorMessage.endDate = ErrorMessages.ER012_CERTIFICATION_START_DATE_END_DATE;
+      }
     }
 
     if (this.isTouchedAndInvalid('score')) {
-      this.validateField('score',
-        ErrorMessages.ER001_CERTIFICATION_SCORE, '', '', '', '', '',
-        ErrorMessages.ER018_CERTIFICATION_SCORE
-      );
+      if (this.form.get('score')?.errors?.['required']) {
+        this.errorMessage.score = ErrorMessages.ER001_CERTIFICATION_SCORE;
+      } else if (this.form.get('score')?.errors?.['notPositiveInteger']) {
+        this.errorMessage.score = ErrorMessages.ER018_CERTIFICATION_SCORE;
+      }
     }
   }
 
@@ -302,27 +316,6 @@ export class Adm004Component implements OnInit {
    */
   isTouchedAndInvalid(field: string) {
     return this.form.get(field)?.touched && this.form.get(field)?.invalid;
-  }
-
-  /**
-   * Kiểm tra trường thông tin có hợp lệ không
-   */
-  validateField(field: string, error1: string, error2: string, error3: string, error4: string, error5: string, error6: string, error7: string) {
-    if (this.form.get(field)?.errors?.['required'] && error1) {
-      this.errorMessage[field] = error1;
-    } else if ((this.form.get(field)?.errors?.['maxlength'] || this.form.get(field)?.errors?.['minlength']) && error4) {
-      this.errorMessage[field] = error4;
-    } else if (this.form.get(field)?.errors?.['maxlength'] && error2) {
-      this.errorMessage[field] = error2;
-    } else if (this.form.get(field)?.errors?.['pattern'] && error3) {
-      this.errorMessage[field] = error3;
-    } else if (this.form?.errors?.['passwordMismatch'] && error5) {
-      this.errorMessage[field] = error5;
-    } else if (this.form?.errors?.['dateInvalid'] && error6) {
-      this.errorMessage[field] = error6;
-    } else if (this.form.get(field)?.errors?.['notPositiveInteger'] && error7) {
-      this.errorMessage[field] = error7;
-    }
   }
 
   /**
