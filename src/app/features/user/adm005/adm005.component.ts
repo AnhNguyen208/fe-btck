@@ -33,7 +33,7 @@ export class Adm005Component implements OnInit{
    */
   loadEmployee() {
     const value = sessionStorage.getItem("employee");
-    if(value) {
+    if (value) {
       this.form = this.fb.group(JSON.parse(value));
       console.log(this.form.value);
     }
@@ -92,7 +92,7 @@ export class Adm005Component implements OnInit{
     this.employeeService.add(employeeRequest).subscribe({
       next: (response) => {
         console.log(response);
-        if(response.code == "200") {
+        if (response.code == "200") {
           const data = {message: Message.ADD_SUCCESS}
           this.router.navigate(['/user/adm006'], { state: { data: data } });
         } else {
@@ -152,7 +152,7 @@ export class Adm005Component implements OnInit{
     this.employeeService.edit(employeeRequest).subscribe({
       next: (response) => {
         console.log(response);
-        if(response.code == "200") {
+        if (response.code == "200") {
           const data = {message: Message.EDIT_SUCCESS}
           this.router.navigate(['/user/adm006'], { state: { data: data } });
         } else {

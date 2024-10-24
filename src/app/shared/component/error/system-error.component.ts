@@ -11,7 +11,7 @@ export class SystemErrorComponent {
   handleOnClick() {
     const accessToken = sessionStorage.getItem("access_token");
 
-    if(accessToken) {
+    if (accessToken) {
       this.router.navigate(['user/list']);
     } else {
       this.router.navigate(['login']);

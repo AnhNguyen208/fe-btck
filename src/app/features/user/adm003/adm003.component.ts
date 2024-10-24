@@ -34,7 +34,7 @@ export class Adm003Component implements OnInit {
     this.employeeService.getById(id).subscribe({
       next: (response) => {
         // console.log(response);
-        if(response.code == "200") {
+        if (response.code == "200") {
           this.employeeDetail = response;
 
           // console.log(this.employeeDetail);
@@ -69,7 +69,7 @@ export class Adm003Component implements OnInit {
       this.employeeService.deleteById(id).subscribe({
         next: (response) => {
           // console.log(response);
-          if(response.code == "200") {
+          if (response.code == "200") {
             const data = {message: "ユーザの削除が完了しました。"}
             this.router.navigate(['/user/adm006'], { state: { data: data } });
           } else {
