@@ -1,0 +1,13 @@
+.btn.active {
+    background-color: #4CAF50 !important;
+    color: white !important;
+    text-decoration: underline;
+}
+
+.css-grid-table-body div {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    max-width: 200px;
+    display: inline-block;
+  }

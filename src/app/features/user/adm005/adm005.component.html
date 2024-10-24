@@ -1,0 +1,69 @@
+<div class="content">
+    <div class="content-main">
+        <div class="row">
+            <form class="c-form box-shadow" [formGroup]="form" (ngSubmit)="submit()">
+                <ul class="show-data">
+                    <li *ngIf="errorMessage !== ''" class="box-err">
+                        <div class="box-err-content">Error message: {{errorMessage}}</div>
+                    </li>
+                    <li class="title">
+                        <p>情報確認</p>
+                        <p>入力された情報をＯＫボタンクリックでＤＢへ保存してください</p>
+                    </li>
+                    <li class="form-group row d-flex">
+                        <label class="col-form-label col-sm-2">アカウント名</label>
+                        <div class="col-sm col-sm-10">{{form.value.employeeLoginId}}</div>
+                    </li>
+                    <li class="form-group row d-flex">
+                        <label class="col-form-label col-sm-2">グループ</label>
+                        <div class="col-sm col-sm-10">{{form.value.departmentName}}</div>
+                    </li>
+                    <li class="form-group row d-flex">
+                        <label class="col-form-label col-sm-2">氏名</label>
+                        <div class="col-sm col-sm-10">{{form.value.employeeName}}</div>
+                    </li>
+                    <li class="form-group row d-flex">
+                        <label class="col-form-label col-sm-2">カタカナ氏名</label>
+                        <div class="col-sm col-sm-10">{{form.value.employeeNameKana}}</div>
+                    </li>
+                    <li class="form-group row d-flex">
+                        <label class="col-form-label col-sm-2">生年月日</label>
+                        <div class="col-sm col-sm-10">{{form.value.employeeBirthDate | date:"yyyy/MM/dd"}}</div>
+                    </li>
+                    <li class="form-group row d-flex">
+                        <label class="col-form-label col-sm-2">メールアドレス</label>
+                        <div class="col-sm col-sm-10">{{form.value.employeeEmail}}</div>
+                    </li>
+                    <li class="form-group row d-flex  bor-none">
+                        <label class="col-form-label col-sm-2">電話番号</label>
+                        <div class="col-sm col-sm-10">{{form.value.employeeTelephone}}</div>
+                    </li>
+                    <li class="title mt-12"><a href="#!">日本語能力</a></li>
+                    <li class="form-group row d-flex">
+                        <label class="col-form-label col-sm-2">資格</label>
+                        <div class="col-sm col-sm-10">{{form.value.certifications.certificationName}}</div>
+                    </li>
+                    <li class="form-group row d-flex">
+                        <label class="col-form-label col-sm-2">資格交付日</label>
+                        <div class="col-sm col-sm-10">{{form.value.certifications.startDate | date:"yyyy/MM/dd"}}</div>
+                    </li>
+                    <li class="form-group row d-flex">
+                        <label class="col-form-label col-sm-2">失効日</label>
+                        <div class="col-sm col-sm-10">{{form.value.certifications.endDate | date:"yyyy/MM/dd"}}</div>
+                    </li>
+                    <li class="form-group row d-flex">
+                        <label class="col-form-label col-sm-2">点数</label>
+                        <div class="col-sm col-sm-10">{{form.value.certifications.score}}</div>
+                    </li>
+                    <li class="form-group row d-flex">
+                        <div class="btn-group col-sm col-sm-10 ml">
+                            <button type="submit" class="btn btn-primary btn-sm">OK</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                [routerLink]="['/user/adm004']">戻る</button>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
