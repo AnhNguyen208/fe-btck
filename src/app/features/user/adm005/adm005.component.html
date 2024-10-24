@@ -41,19 +41,19 @@
                     <li class="title mt-12"><a href="#!">日本語能力</a></li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">資格</label>
-                        <div class="col-sm col-sm-10">{{form.value.certificationName}}</div>
+                        <div class="col-sm col-sm-10">{{form.value.certifications.certificationName}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">資格交付日</label>
-                        <div class="col-sm col-sm-10">{{form.value.startDate | date:"yyyy/MM/dd"}}</div>
+                        <div class="col-sm col-sm-10">{{form.value.certifications.startDate | date:"yyyy/MM/dd"}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">失効日</label>
-                        <div class="col-sm col-sm-10">{{form.value.endDate | date:"yyyy/MM/dd"}}</div>
+                        <div class="col-sm col-sm-10">{{form.value.certifications.endDate | date:"yyyy/MM/dd"}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <label class="col-form-label col-sm-2">点数</label>
-                        <div class="col-sm col-sm-10">{{form.value.score}}</div>
+                        <div class="col-sm col-sm-10">{{form.value.certifications.score}}</div>
                     </li>
                     <li class="form-group row d-flex">
                         <div class="btn-group col-sm col-sm-10 ml">

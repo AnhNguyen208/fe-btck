@@ -55,11 +55,13 @@ export class Adm004Component implements OnInit {
       employeeLoginConfirmPassword: ['', [Validators.required]],
       departmentId: ['', [Validators.required]],
       departmentName: [''],
-      certificationId: [''],
-      certificationName: [''],
-      startDate: [{ value: '', disabled: true }],
-      endDate: [{ value: '', disabled: true }],
-      score: [{ value: '', disabled: true }],
+      certifications: this.fb.array([this.fb.group({
+        certificationId: [''],
+        certificationName: [''],
+        startDate: [{ value: '', disabled: true }],
+        endDate: [{ value: '', disabled: true }],
+        score: [{ value: '', disabled: true }]
+      })]),
     }, {
       validators: [this.passwordMatchValidator, this.dateOrderValidator],
     });
@@ -148,7 +150,7 @@ export class Adm004Component implements OnInit {
   getDetailEmployee(id: number) {
     this.employeeService.getById(id).subscribe({
       next: (response) => {
-        console.log(response);
+        // console.log(response);
         if (response.code == "200") {
           this.setFormValue(response);
 
@@ -184,24 +186,19 @@ export class Adm004Component implements OnInit {
       departmentName: employee.departmentName,
     });
 
-    if (employee.certificationId || employee.certifications) {
-      let certificationId = employee.certificationId ? employee.certificationId :
-        employee.certifications[0] ? employee.certifications[0].certificationId : '';
-      let certificationName = employee.certificationName ? employee.certificationName :
-        employee.certifications[0] ? employee.certifications[0].certificationName : '';
-      let startDate = employee.startDate && new Date(employee.startDate) ? new Date(employee.startDate) :
-        employee.certifications[0] && new Date(employee.certifications[0].startDate) ? new Date(employee.certifications[0].startDate) : '';
-      let endDate = employee.endDate && new Date(employee.endDate) ? new Date(employee.endDate) :
-        employee.certifications[0] && new Date(employee.certifications[0].endDate) ? new Date(employee.certifications[0].endDate) : '';
-      let score = employee.score ? employee.score :
-        employee.certifications[0] ? employee.certifications[0].score : '';
+    const certificationInfo = employee.certifications[0];
+    if (certificationInfo) {
+      let startDate = new Date(certificationInfo.startDate) ? new Date(certificationInfo.startDate) : '';
+      let endDate = new Date(certificationInfo.endDate) ? new Date(certificationInfo.endDate) : '';
 
       this.form.patchValue({
-        certificationId: certificationId,
-        certificationName: certificationName,
-        startDate: startDate,
-        endDate: endDate,
-        score: score,
+        certifications : [{
+          certificationId: certificationInfo.certificationId,
+          certificationName: certificationInfo.certificationName,
+          startDate: startDate,
+          endDate: endDate,
+          score: certificationInfo.score,
+        }]
       });
 
       this.onCertificationIdChange();
@@ -289,25 +286,27 @@ export class Adm004Component implements OnInit {
       }
     }
 
-    if (this.isTouchedAndInvalid('startDate')) {
-      if (this.form.get('startDate')?.errors?.['required']) {
+    if (this.isTouchedAndInvalid('certifications.0.startDate')) {
+      if (this.form.get('certifications.0.startDate')?.errors?.['required']) {
         this.errorMessage.startDate = ErrorMessages.ER001_CERTIFICATION_START_DATE;
+      } else if (this.form?.errors?.['dateInvalid']) {
+        this.errorMessage.endDate = ErrorMessages.ER012_CERTIFICATION_START_DATE_END_DATE;
       }
     }
 
-    if ((this.isTouchedAndInvalid('endDate')) ||
-      (this.form.get('endDate') && this.form?.errors?.['dateInvalid'])) {
-      if (this.form.get('endDate')?.errors?.['required']) {
+    if ((this.isTouchedAndInvalid('certifications.0.endDate')) ||
+      (this.form.get('certifications.0.endDate') && this.form?.errors?.['dateInvalid'])) {
+      if (this.form.get('certifications.0.endDate')?.errors?.['required']) {
         this.errorMessage.endDate = ErrorMessages.ER001_CERTIFICATION_END_DATE;
       } else if (this.form?.errors?.['dateInvalid']) {
         this.errorMessage.endDate = ErrorMessages.ER012_CERTIFICATION_START_DATE_END_DATE;
       }
     }
 
-    if (this.isTouchedAndInvalid('score')) {
-      if (this.form.get('score')?.errors?.['required']) {
+    if (this.isTouchedAndInvalid('certifications.0.score')) {
+      if (this.form.get('certifications.0.score')?.errors?.['required']) {
         this.errorMessage.score = ErrorMessages.ER001_CERTIFICATION_SCORE;
-      } else if (this.form.get('score')?.errors?.['notPositiveInteger']) {
+      } else if (this.form.get('certifications.0.score')?.errors?.['notPositiveInteger']) {
         this.errorMessage.score = ErrorMessages.ER018_CERTIFICATION_SCORE;
       }
     }
@@ -333,8 +332,8 @@ export class Adm004Component implements OnInit {
    * Kiểm tra trường startDate và endDate có hợp lệ không
    */
   dateOrderValidator(control: AbstractControl): ValidationErrors | null {
-    const startDate = control.get('startDate')?.value;
-    const endDate = control.get('endDate')?.value;
+    const startDate = control.get('certifications.0.startDate')?.value;
+    const endDate = control.get('certifications.0.endDate')?.value;
 
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -359,27 +358,28 @@ export class Adm004Component implements OnInit {
    * Xử lí khi chọn certificationId và không chọn certificationId
    */
   onCertificationIdChange() {
-    if (this.form.get('certificationId')?.value) {
-      this.form.get('startDate')?.enable();
-      this.form.get('endDate')?.enable();
-      this.form.get('score')?.enable();
-      this.form.get('startDate')?.setValidators(Validators.required);
-      this.form.get('endDate')?.setValidators(Validators.required);
-      this.form.get('score')?.setValidators([Validators.required, this.positiveIntegerValidator]);
+    const control = this.form.get('certifications.0');
+    if (control?.get('certificationId')?.value) {
+      control?.get('startDate')?.enable();
+      control?.get('endDate')?.enable();
+      control?.get('score')?.enable();
+      control?.get('startDate')?.setValidators(Validators.required);
+      control?.get('endDate')?.setValidators(Validators.required);
+      control?.get('score')?.setValidators([Validators.required, this.positiveIntegerValidator]);
     } else {
-      this.form.get('startDate')?.disable();
-      this.form.get('endDate')?.disable();
-      this.form.get('score')?.disable();
-      this.form.get('startDate')?.clearValidators();
-      this.form.get('endDate')?.clearValidators();
-      this.form.get('score')?.clearValidators();
-      this.form.get('startDate')?.reset();
-      this.form.get('endDate')?.reset();
-      this.form.get('score')?.reset();
+      control?.get('startDate')?.disable();
+      control?.get('endDate')?.disable();
+      control?.get('score')?.disable();
+      control?.get('startDate')?.clearValidators();
+      control?.get('endDate')?.clearValidators();
+      control?.get('score')?.clearValidators();
+      control?.get('startDate')?.reset();
+      control?.get('endDate')?.reset();
+      control?.get('score')?.reset();
     }
-    this.form.get('startDate')?.updateValueAndValidity();
-    this.form.get('endDate')?.updateValueAndValidity();
-    this.form.get('score')?.updateValueAndValidity();
+    control?.get('startDate')?.updateValueAndValidity();
+    control?.get('endDate')?.updateValueAndValidity();
+    control?.get('score')?.updateValueAndValidity();
   }
 
   /**
@@ -403,7 +403,7 @@ export class Adm004Component implements OnInit {
   submit() {
     if (this.form.valid) {
       this.form.value.departmentName = '';
-      this.form.value.certificationName = '';
+      this.form.value.certifications[0].certificationName = '';
 
       this.departments.forEach((value) => {
         if (value.departmentId == this.form.value.departmentId) {
@@ -412,11 +412,13 @@ export class Adm004Component implements OnInit {
       });
 
       this.certifications.forEach((value) => {
-        if (value.certificationId == this.form.value.certificationId) {
-          this.form.value.certificationName = value.certificationName;
+        if (value.certificationId == this.form.value.certifications[0].certificationId) {
+          this.form.value.certifications[0].certificationName = value.certificationName;
         }
       });
 
+      console.log(this.form.value);
+      
       sessionStorage.setItem("employee", JSON.stringify(this.form.value));
       this.router.navigate(['user/adm005']);
     } else {

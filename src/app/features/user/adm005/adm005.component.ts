@@ -57,9 +57,9 @@ export class Adm005Component implements OnInit{
    */
   addEmployee() {
     let birthdate = this.datePipe.transform(this.form.value.employeeBirthDate, 'yyyy/MM/dd')?.toString() || '';
-    let startDate = this.datePipe.transform(this.form.value.startDate, 'yyyy/MM/dd')?.toString() || '';
-    let endDate = this.datePipe.transform(this.form.value.endDate, 'yyyy/MM/dd')?.toString() || '';
-    const employeeRequest: EmployeeRequest = this.form.value.certificationId !== "" ? {
+    let startDate = this.datePipe.transform(this.form.value.certifications.startDate, 'yyyy/MM/dd')?.toString() || '';
+    let endDate = this.datePipe.transform(this.form.value.certifications.endDate, 'yyyy/MM/dd')?.toString() || '';
+    const employeeRequest: EmployeeRequest = this.form.value.certifications.certificationId !== "" ? {
       employeeName: this.form.value.employeeName,
       employeeBirthDate: birthdate,
       employeeEmail: this.form.value.employeeEmail,
@@ -70,10 +70,10 @@ export class Adm005Component implements OnInit{
       departmentId: this.form.value.departmentId,
       certifications: [
         {
-          certificationId: this.form.value.certificationId,
+          certificationId: this.form.value.certifications.certificationId,
           certificationStartDate: startDate,
           certificationEndDate: endDate,
-          employeeCertificationScore: this.form.value.score
+          employeeCertificationScore: this.form.value.certifications.score
         }
       ]
     } : 
@@ -110,14 +110,14 @@ export class Adm005Component implements OnInit{
   }
 
   /**
-   * Gửi request chỉnh sửa employyee đến BE
+   * Gửi request chỉnh s employyee đến BE
    * Xử lý response nhận được từ BE
    */
   editEmployee() {
     let birthdate = this.datePipe.transform(this.form.value.employeeBirthDate, 'yyyy/MM/dd')?.toString() || '';
-    let startDate = this.datePipe.transform(this.form.value.startDate, 'yyyy/MM/dd')?.toString() || '';
-    let endDate = this.datePipe.transform(this.form.value.endDate, 'yyyy/MM/dd')?.toString() || '';
-    const employeeRequest: EmployeeRequest = this.form.value.certificationId !== "" ? {
+    let startDate = this.datePipe.transform(this.form.value.certifications.startDate, 'yyyy/MM/dd')?.toString() || '';
+    let endDate = this.datePipe.transform(this.form.value.certifications.endDate, 'yyyy/MM/dd')?.toString() || '';
+    const employeeRequest: EmployeeRequest = this.form.value.certifications.certificationId !== "" ? {
       employeeId: this.form.value.employeeId,
       employeeName: this.form.value.employeeName,
       employeeBirthDate: birthdate,
@@ -129,10 +129,10 @@ export class Adm005Component implements OnInit{
       departmentId: this.form.value.departmentId,
       certifications: [
         {
-          certificationId: this.form.value.certificationId,
+          certificationId: this.form.value.certifications.certificationId,
           certificationStartDate: startDate,
           certificationEndDate: endDate,
-          employeeCertificationScore: this.form.value.score
+          employeeCertificationScore: this.form.value.certifications.score
         }
       ]
     } : 
