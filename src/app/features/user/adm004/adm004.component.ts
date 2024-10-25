@@ -49,7 +49,7 @@ export class Adm004Component implements OnInit {
       employeeBirthDate: ['', [Validators.required]],
       employeeEmail: ['', [Validators.required, Validators.maxLength(125)]],
       employeeTelephone: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\x00-\x7F]*$/)]],
-      employeeNameKana: ['', [Validators.required, Validators.maxLength(125), Validators.pattern(/^[\uFF61-\uFF9F・]+$/)]],
+      employeeNameKana: ['', [Validators.required, Validators.maxLength(125), Validators.pattern(/^[\u30A0-\u30FF\uFF65-\uFF9F・]+$/), this.validateKanaHalfSize]],
       employeeLoginId: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^(?![0-9])[a-zA-Z0-9_]*$/)]],
       employeeLoginPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
       employeeLoginConfirmPassword: ['', [Validators.required]],
@@ -208,7 +208,7 @@ export class Adm004Component implements OnInit {
       let endDate = new Date(certificationInfo.endDate) ? new Date(certificationInfo.endDate) : '';
 
       this.form.patchValue({
-        certifications : [{
+        certifications: [{
           certificationId: certificationInfo.certificationId,
           certificationName: certificationInfo.certificationName,
           startDate: startDate,
@@ -225,7 +225,7 @@ export class Adm004Component implements OnInit {
    * Kiểm tra thông tin employee đã nhập có hợp lệ không
    */
   validateForm() {
-    // console.log(this.form);
+    console.log(this.form);
 
     if (this.isTouchedAndInvalid('employeeLoginId')) {
       if (this.form.get('employeeLoginId')?.errors?.['required']) {
@@ -258,6 +258,8 @@ export class Adm004Component implements OnInit {
         this.errorMessage.employeeNameKana = ErrorMessages.ER006('カタカナ氏名', 125);
       } else if (this.form.get('employeeNameKana')?.errors?.['pattern']) {
         this.errorMessage.employeeNameKana = ErrorMessages.ER009('カタカナ氏名');
+      } else if (this.form.get('employeeNameKana')?.errors?.['invalidKanaHalfSize']) {
+        this.errorMessage.employeeNameKana = ErrorMessages.ER008('カタカナ氏名');
       }
     }
 
@@ -333,6 +335,13 @@ export class Adm004Component implements OnInit {
    */
   isTouchedAndInvalid(field: string) {
     return this.form.get(field)?.touched && this.form.get(field)?.invalid;
+  }
+
+  validateKanaHalfSize(control: AbstractControl): ValidationErrors | null {
+    const regexKatakana = /^[\uFF65-\uFF9F・]+$/;
+    let nameKana: string = control?.value?.toString() || '';
+
+    return regexKatakana.test(nameKana) ? null : {invalidKanaHalfSize: true};
   }
 
   /**
@@ -434,7 +443,7 @@ export class Adm004Component implements OnInit {
       });
 
       console.log(this.form.value);
-      
+
       sessionStorage.setItem("employee", JSON.stringify(this.form.value));
       this.router.navigate(['user/adm005']);
     } else {
