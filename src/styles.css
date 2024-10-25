@@ -335,8 +335,12 @@ main {
 }
 
 .nav-bar {
+  position: fixed;
+  top: 0;
   background: #fff;
   border-bottom: 1px solid #ccc;
+  width: 100%;
+  z-index: 1000;
 }
 
 .d-flex {

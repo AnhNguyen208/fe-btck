@@ -8,7 +8,7 @@
                         <label class="col-form-label col-sm-2"><i class="relative">アカウント氏名:<span
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
-                            <input type="text" class="form-control" formControlName="employeeLoginId"
+                            <input #firstInput type="text" class="form-control" formControlName="employeeLoginId"
                                 [required]="isTouchedAndInvalid('employeeLoginId') ? true : false">
                             <div *ngIf="isTouchedAndInvalid('employeeLoginId')">
                                 <div class="error-message">{{errorMessage.employeeLoginId}}</div>
@@ -61,9 +61,9 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10 d-flex">
                             <div class="input-group date datepicker" data-date-format="dd-mm-yyyy">
-                                <input class="form-control" type="text" readonly formControlName="employeeBirthDate"
+                                <input class="form-control" type="text" readonly formControlName="employeeBirthDate" #datePickerBirthdate="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }"
                                     [required]="isTouchedAndInvalid('employeeBirthDate') ? true : false">
-                                <span bsDatepicker [bsValue]="bsValue" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }"
+                                <span (click)="datePickerBirthdate.show()"
                                     style="margin-left: -15px;" class="input-group-addon"><i
                                         class="glyphicon glyphicon-calendar"></i></span>
                                 <div style="margin-left: -220px;" *ngIf="isTouchedAndInvalid('employeeBirthDate')">
@@ -141,9 +141,9 @@
                                     <div id="datepicker" class="input-group date datepicker"
                                         data-date-format="dd-mm-yyyy">
                                         <input class="form-control" readonly formControlName="startDate" type="text"
+                                            bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }" #datePickerStartDate="bsDatepicker"
                                             [required]="isTouchedAndInvalid('certifications.0.startDate') ? true : false">
-                                        <span bsDatepicker [bsValue]="bsValue"
-                                            [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }" class="input-group-addon"><i
+                                        <span (click)="datePickerStartDate.show()" class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
                                         <div style="margin-left: -220px;"
                                             *ngIf="isTouchedAndInvalid('certifications.0.startDate')">
@@ -158,9 +158,9 @@
                                 <div class="col-sm col-sm-10 d-flex">
                                     <div class="input-group date datepicker" data-date-format="dd-mm-yyyy">
                                         <input class="form-control" readonly formControlName="endDate" type="text"
+                                            bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }" #datePickerEndDate="bsDatepicker"
                                             [required]="isTouchedAndInvalid('certifications.0.endDate') ? true : false">
-                                        <span bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }"
-                                            class="input-group-addon"><i
+                                        <span (click)="datePickerEndDate.show()" class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
                                         <div style="margin-left: -220px;"
                                             *ngIf="isTouchedAndInvalid('certifications.0.endDate')">

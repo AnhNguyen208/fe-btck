@@ -10,6 +10,16 @@ export class HeaderComponent {
     private router: Router,
   ) { }
 
+  scrollTop() {
+    console.log("asdgasdgasd");
+    
+    // Cuộn lên đầu trang
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" // Tạo hiệu ứng cuộn mượt
+    });
+  }
+
   logout() {
     sessionStorage.removeItem('access_token');
     this.router.navigate(['login']);

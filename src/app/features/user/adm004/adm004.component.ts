@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Certification } from 'src/app/model/certification';
@@ -71,10 +71,18 @@ export class Adm004Component implements OnInit {
     });
   }
 
+  @ViewChild('firstInput')
+  firstInputElement!: ElementRef;
+
   ngOnInit(): void {
     this.getDepartments();
     this.getCertifications();
     this.loadEmployee();
+  }
+
+  ngAfterViewInit(): void {
+    // Focus vào phần tử đầu tiên sau khi view được khởi tạo
+    this.firstInputElement.nativeElement.focus();
   }
 
   /**
@@ -221,101 +229,101 @@ export class Adm004Component implements OnInit {
 
     if (this.isTouchedAndInvalid('employeeLoginId')) {
       if (this.form.get('employeeLoginId')?.errors?.['required']) {
-        this.errorMessage.employeeLoginId = ErrorMessages.ER001_EMPLOYEE_LOGIN_ID;
+        this.errorMessage.employeeLoginId = ErrorMessages.ER001('アカウント名');
       } else if (this.form.get('employeeLoginId')?.errors?.['maxlength']) {
-        this.errorMessage.employeeLoginId = ErrorMessages.ER006_EMPLOYEE_LOGIN_ID;
+        this.errorMessage.employeeLoginId = ErrorMessages.ER006('アカウント名', 50);
       } else if (this.form.get('employeeLoginId')?.errors?.['pattern']) {
-        this.errorMessage.employeeLoginId = ErrorMessages.ER019_EMPLOYEE_LOGIN_ID;
+        this.errorMessage.employeeLoginId = ErrorMessages.ER019();
       }
     }
 
     if (this.isTouchedAndInvalid('departmentId')) {
       if (this.form.get('departmentId')?.errors?.['required']) {
-        this.errorMessage.departmentId = ErrorMessages.ER002_DEPARTMENT_ID;
+        this.errorMessage.departmentId = ErrorMessages.ER002('グループ');
       }
     }
 
     if (this.isTouchedAndInvalid('employeeName')) {
       if (this.form.get('employeeName')?.errors?.['required']) {
-        this.errorMessage.employeeName = ErrorMessages.ER001_EMPLOYEE_NAME;
+        this.errorMessage.employeeName = ErrorMessages.ER001('氏名');
       } else if (this.form.get('employeeName')?.errors?.['maxlength']) {
-        this.errorMessage.employeeName = ErrorMessages.ER006_EMPLOYEE_NAME;
+        this.errorMessage.employeeName = ErrorMessages.ER006('氏名', 125);
       }
     }
 
     if (this.isTouchedAndInvalid('employeeNameKana')) {
       if (this.form.get('employeeNameKana')?.errors?.['required']) {
-        this.errorMessage.employeeNameKana = ErrorMessages.ER001_EMPLOYEE_NAME_KANA;
+        this.errorMessage.employeeNameKana = ErrorMessages.ER001('カタカナ氏名');
       } else if (this.form.get('employeeNameKana')?.errors?.['maxlength']) {
-        this.errorMessage.employeeNameKana = ErrorMessages.ER006_EMPLOYEE_NAME_KANA;
+        this.errorMessage.employeeNameKana = ErrorMessages.ER006('カタカナ氏名', 125);
       } else if (this.form.get('employeeNameKana')?.errors?.['pattern']) {
-        this.errorMessage.employeeNameKana = ErrorMessages.ER009_EMPLOYEE_NAME_KANA;
+        this.errorMessage.employeeNameKana = ErrorMessages.ER009('カタカナ氏名');
       }
     }
 
     if (this.isTouchedAndInvalid('employeeBirthDate')) {
       if (this.form.get('employeeBirthDate')?.errors?.['required']) {
-        this.errorMessage.employeeBirthDate = ErrorMessages.ER001_EMPLOYEE_BIRTHDATE;
+        this.errorMessage.employeeBirthDate = ErrorMessages.ER001('生年月日');
       }
     }
 
     if (this.isTouchedAndInvalid('employeeEmail')) {
       if (this.form.get('employeeEmail')?.errors?.['required']) {
-        this.errorMessage.employeeEmail = ErrorMessages.ER001_EMPLOYEE_EMAIL;
+        this.errorMessage.employeeEmail = ErrorMessages.ER001('メールアドレス');
       } else if (this.form.get('employeeEmail')?.errors?.['maxlength']) {
-        this.errorMessage.employeeEmail = ErrorMessages.ER006_EMPLOYEE_EMAIL;
+        this.errorMessage.employeeEmail = ErrorMessages.ER006('メールアドレス', 125);
       }
     }
 
     if (this.isTouchedAndInvalid('employeeTelephone')) {
       if (this.form.get('employeeTelephone')?.errors?.['required']) {
-        this.errorMessage.employeeTelephone = ErrorMessages.ER001_EMPLOYEE_TELEPHONE;
+        this.errorMessage.employeeTelephone = ErrorMessages.ER001('電話番号');
       } else if (this.form.get('employeeTelephone')?.errors?.['maxlength']) {
-        this.errorMessage.employeeTelephone = ErrorMessages.ER006_EMPLOYEE_TELEPHONE;
+        this.errorMessage.employeeTelephone = ErrorMessages.ER006('電話番号', 50);
       } else if (this.form.get('employeeTelephone')?.errors?.['pattern']) {
-        this.errorMessage.employeeTelephone = ErrorMessages.ER008_EMPLOYEE_TELEPHONE;
+        this.errorMessage.employeeTelephone = ErrorMessages.ER008('電話番号');
       }
     }
 
     if (this.isTouchedAndInvalid('employeeLoginPassword')) {
       if (this.form.get('employeeLoginPassword')?.errors?.['required']) {
-        this.errorMessage.employeeLoginPassword = ErrorMessages.ER001_EMPLOYEE_LOGIN_PASSWORD;
+        this.errorMessage.employeeLoginPassword = ErrorMessages.ER001('パスワード');
       } else if (this.form.get('employeeLoginPassword')?.errors?.['maxlength'] || this.form.get('employeeLoginPassword')?.errors?.['minlength']) {
-        this.errorMessage.employeeLoginPassword = ErrorMessages.ER007_EMPLOYEE_LOGIN_PASSWORD;
+        this.errorMessage.employeeLoginPassword = ErrorMessages.ER007('パスワード', 8, 50);
       }
     }
 
     if ((this.isTouchedAndInvalid('employeeLoginConfirmPassword')) ||
       (this.form.get('employeeLoginConfirmPassword') && this.form?.errors?.['passwordMismatch'])) {
       if (this.form.get('employeeLoginConfirmPassword')?.errors?.['required']) {
-        this.errorMessage.employeeLoginConfirmPassword = ErrorMessages.ER001_EMPLOYEE_LOGIN_CONFIRM_PASSWORD;
+        this.errorMessage.employeeLoginConfirmPassword = ErrorMessages.ER001('パスワード（確認）');
       } else if (this.form?.errors?.['passwordMismatch']) {
-        this.errorMessage.employeeLoginConfirmPassword = ErrorMessages.ER017_EMPLOYEE_LOGIN_CONFIRM_PASSWORD;
+        this.errorMessage.employeeLoginConfirmPassword = ErrorMessages.ER017();
       }
     }
 
     if (this.isTouchedAndInvalid('certifications.0.startDate')) {
       if (this.form.get('certifications.0.startDate')?.errors?.['required']) {
-        this.errorMessage.startDate = ErrorMessages.ER001_CERTIFICATION_START_DATE;
+        this.errorMessage.startDate = ErrorMessages.ER001('資格交付日');
       } else if (this.form?.errors?.['dateInvalid']) {
-        this.errorMessage.endDate = ErrorMessages.ER012_CERTIFICATION_START_DATE_END_DATE;
+        this.errorMessage.endDate = ErrorMessages.ER012();
       }
     }
 
     if ((this.isTouchedAndInvalid('certifications.0.endDate')) ||
       (this.form.get('certifications.0.endDate') && this.form?.errors?.['dateInvalid'])) {
       if (this.form.get('certifications.0.endDate')?.errors?.['required']) {
-        this.errorMessage.endDate = ErrorMessages.ER001_CERTIFICATION_END_DATE;
+        this.errorMessage.endDate = ErrorMessages.ER001('失効日');
       } else if (this.form?.errors?.['dateInvalid']) {
-        this.errorMessage.endDate = ErrorMessages.ER012_CERTIFICATION_START_DATE_END_DATE;
+        this.errorMessage.endDate = ErrorMessages.ER012();
       }
     }
 
     if (this.isTouchedAndInvalid('certifications.0.score')) {
       if (this.form.get('certifications.0.score')?.errors?.['required']) {
-        this.errorMessage.score = ErrorMessages.ER001_CERTIFICATION_SCORE;
+        this.errorMessage.score = ErrorMessages.ER001('点数');
       } else if (this.form.get('certifications.0.score')?.errors?.['notPositiveInteger']) {
-        this.errorMessage.score = ErrorMessages.ER018_CERTIFICATION_SCORE;
+        this.errorMessage.score = ErrorMessages.ER018('点数');
       }
     }
   }
