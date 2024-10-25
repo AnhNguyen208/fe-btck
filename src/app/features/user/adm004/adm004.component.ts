@@ -47,7 +47,7 @@ export class Adm004Component implements OnInit {
       employeeId: [''],
       employeeName: ['', [Validators.required, Validators.maxLength(125)]],
       employeeBirthDate: ['', [Validators.required]],
-      employeeEmail: ['', [Validators.required, Validators.maxLength(125)]],
+      employeeEmail: ['', [Validators.required, Validators.email, Validators.maxLength(125), Validators.pattern(/^[\u0020-\u007E]*$/)]],
       employeeTelephone: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\x00-\x7F]*$/)]],
       employeeNameKana: ['', [Validators.required, Validators.maxLength(125), Validators.pattern(/^[\u30A0-\u30FF\uFF65-\uFF9F・]+$/), this.validateKanaHalfSize]],
       employeeLoginId: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^(?![0-9])[a-zA-Z0-9_]*$/)]],
@@ -272,9 +272,13 @@ export class Adm004Component implements OnInit {
     if (this.isTouchedAndInvalid('employeeEmail')) {
       if (this.form.get('employeeEmail')?.errors?.['required']) {
         this.errorMessage.employeeEmail = ErrorMessages.ER001('メールアドレス');
+      } else if (this.form.get('employeeEmail')?.errors?.['pattern']) {
+        this.errorMessage.employeeEmail = ErrorMessages.ER008('メールアドレス');
       } else if (this.form.get('employeeEmail')?.errors?.['maxlength']) {
         this.errorMessage.employeeEmail = ErrorMessages.ER006('メールアドレス', 125);
-      }
+      } else if (this.form.get('employeeEmail')?.errors?.['email']) {
+        this.errorMessage.employeeEmail = ErrorMessages.ER005('メールアドレス', 'xxx@xxx.xxx');
+      } 
     }
 
     if (this.isTouchedAndInvalid('employeeTelephone')) {
