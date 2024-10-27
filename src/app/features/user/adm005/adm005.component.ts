@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { EmployeeRequest } from 'src/app/model/employeeRequest';
 import { Message } from 'src/app/model/messages';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
   selector: 'app-adm005',
@@ -20,6 +21,7 @@ export class Adm005Component implements OnInit{
     private employeeService: EmployeeService,
     private datePipe: DatePipe,
     private router: Router,
+    private messageService: MessageService,
   ) {
     this.form = this.fb.group({});
   }
@@ -96,7 +98,7 @@ export class Adm005Component implements OnInit{
           const data = {message: Message.ADD_SUCCESS}
           this.router.navigate(['/user/adm006'], { state: { data: data } });
         } else {
-          this.errorMessage = response.message.code + ' ' + response.message.params[0];
+          this.errorMessage = this.messageService.getMessages(response.message.code, response.message.params[0]);
           console.log(this.errorMessage);
         }
       },
