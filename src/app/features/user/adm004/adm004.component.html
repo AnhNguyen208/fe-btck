@@ -95,7 +95,8 @@
                         </div>
                     </li>
                     <li class="form-group row d-flex">
-                        <label class="col-form-label col-sm-2"><i class="relative">パスワード:<span
+                        <label class="col-form-label col-sm-2"><i class="relative">パスワード:
+                            <span *ngIf="form.get('employeeId')?.value == ''"
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
                             <input type="password" class="form-control" formControlName="employeeLoginPassword"

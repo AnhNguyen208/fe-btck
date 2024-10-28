@@ -47,8 +47,8 @@ export class Adm004Component implements OnInit {
       employeeId: [''],
       employeeName: ['', [Validators.required, Validators.maxLength(125)]],
       employeeBirthDate: ['', [Validators.required]],
-      employeeEmail: ['', [Validators.required, Validators.email, Validators.maxLength(125), Validators.pattern(/^[\u0020-\u007E]*$/)]],
-      employeeTelephone: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\x00-\x7F]*$/)]],
+      employeeEmail: ['', [Validators.required, Validators.maxLength(125), Validators.pattern(/^[\u0020-\u007E]*$/)]],
+      employeeTelephone: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[0-9]*$/)]],
       employeeNameKana: ['', [Validators.required, Validators.maxLength(125), Validators.pattern(/^[\u30A0-\u30FF\uFF65-\uFF9F・]+$/), this.validateKanaHalfSize]],
       employeeLoginId: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^(?![0-9])[a-zA-Z0-9_]*$/)]],
       employeeLoginPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
@@ -141,6 +141,7 @@ export class Adm004Component implements OnInit {
       this.setFormValue(employee);
 
       sessionStorage.removeItem("employee");
+
       if (this.form.get('employeeId')?.value) {
         this.onPasswordAndConfirmPasswordChange();
       }
@@ -276,9 +277,7 @@ export class Adm004Component implements OnInit {
         this.errorMessage.employeeEmail = ErrorMessages.ER008('メールアドレス');
       } else if (this.form.get('employeeEmail')?.errors?.['maxlength']) {
         this.errorMessage.employeeEmail = ErrorMessages.ER006('メールアドレス', 125);
-      } else if (this.form.get('employeeEmail')?.errors?.['email']) {
-        this.errorMessage.employeeEmail = ErrorMessages.ER005('メールアドレス', 'xxx@xxx.xxx');
-      } 
+      }
     }
 
     if (this.isTouchedAndInvalid('employeeTelephone')) {
@@ -345,7 +344,7 @@ export class Adm004Component implements OnInit {
     const regexKatakana = /^[\uFF65-\uFF9F・]+$/;
     let nameKana: string = control?.value?.toString() || '';
 
-    return regexKatakana.test(nameKana) ? null : {invalidKanaHalfSize: true};
+    return regexKatakana.test(nameKana) ? null : { invalidKanaHalfSize: true };
   }
 
   /**
@@ -415,15 +414,13 @@ export class Adm004Component implements OnInit {
    * Xử lí khi nhập employeeLoginPassword và employeeLoginConfirmPassword
    */
   onPasswordAndConfirmPasswordChange() {
-    if (this.form.get('employeeLoginPassword')?.value || this.form.get('employeeLoginConfirmPassword')?.value) {
-      this.form.get('employeeLoginPassword')?.setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(50)]);
-      this.form.get('employeeLoginConfirmPassword')?.setValidators(Validators.required);
-    } else {
-      this.form.get('employeeLoginPassword')?.clearValidators();
-      this.form.get('employeeLoginConfirmPassword')?.clearValidators();
-    }
+    this.form.get('employeeLoginPassword')?.clearValidators();
+    this.form.get('employeeLoginConfirmPassword')?.clearValidators();
+    this.form.get('employeeLoginPassword')?.setValidators([Validators.minLength(8), Validators.maxLength(50)]);
     this.form.get('employeeLoginPassword')?.updateValueAndValidity();
     this.form.get('employeeLoginConfirmPassword')?.updateValueAndValidity();
+
+    console.log(this.form.get('employeeLoginPassword')?.validator?.toString());
   }
 
   /**
