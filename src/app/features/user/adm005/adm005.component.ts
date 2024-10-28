@@ -12,7 +12,7 @@ import { MessageService } from 'src/app/service/message/message.service';
   templateUrl: './adm005.component.html',
   styleUrls: ['./adm005.component.css']
 })
-export class Adm005Component implements OnInit{
+export class Adm005Component implements OnInit {
   form: FormGroup<any>;
   errorMessage: string = '';
 
@@ -50,7 +50,7 @@ export class Adm005Component implements OnInit{
     } else {
       this.addEmployee();
     }
-    
+
   }
 
   /**
@@ -78,25 +78,27 @@ export class Adm005Component implements OnInit{
           employeeCertificationScore: this.form.value.certifications.score
         }
       ]
-    } : 
-    {
-      employeeName: this.form.value.employeeName,
-      employeeBirthDate: birthdate,
-      employeeEmail: this.form.value.employeeEmail,
-      employeeTelephone: this.form.value.employeeTelephone,
-      employeeNameKana: this.form.value.employeeNameKana,
-      employeeLoginId: this.form.value.employeeLoginId,
-      employeeLoginPassword: this.form.value.employeeLoginPassword,
-      departmentId: this.form.value.departmentId,
-      certifications: []
-    }
-    ;
+    } :
+      {
+        employeeName: this.form.value.employeeName,
+        employeeBirthDate: birthdate,
+        employeeEmail: this.form.value.employeeEmail,
+        employeeTelephone: this.form.value.employeeTelephone,
+        employeeNameKana: this.form.value.employeeNameKana,
+        employeeLoginId: this.form.value.employeeLoginId,
+        employeeLoginPassword: this.form.value.employeeLoginPassword,
+        departmentId: this.form.value.departmentId,
+        certifications: []
+      }
+      ;
     this.employeeService.add(employeeRequest).subscribe({
       next: (response) => {
         console.log(response);
         if (response.code == "200") {
-          const data = {message: Message.ADD_SUCCESS}
+          const data = { message: Message.ADD_SUCCESS }
           this.router.navigate(['/user/adm006'], { state: { data: data } });
+          sessionStorage.removeItem("employee");
+
         } else {
           this.errorMessage = this.messageService.getMessages(response.message.code, response.message.params[0]);
           console.log(this.errorMessage);
@@ -137,28 +139,29 @@ export class Adm005Component implements OnInit{
           employeeCertificationScore: this.form.value.certifications.score
         }
       ]
-    } : 
-    {
-      employeeId: this.form.value.employeeId,
-      employeeName: this.form.value.employeeName,
-      employeeBirthDate: birthdate,
-      employeeEmail: this.form.value.employeeEmail,
-      employeeTelephone: this.form.value.employeeTelephone,
-      employeeNameKana: this.form.value.employeeNameKana,
-      employeeLoginId: this.form.value.employeeLoginId,
-      employeeLoginPassword: this.form.value.employeeLoginPassword,
-      departmentId: this.form.value.departmentId,
-      certifications: []
-    }
-    ;
+    } :
+      {
+        employeeId: this.form.value.employeeId,
+        employeeName: this.form.value.employeeName,
+        employeeBirthDate: birthdate,
+        employeeEmail: this.form.value.employeeEmail,
+        employeeTelephone: this.form.value.employeeTelephone,
+        employeeNameKana: this.form.value.employeeNameKana,
+        employeeLoginId: this.form.value.employeeLoginId,
+        employeeLoginPassword: this.form.value.employeeLoginPassword,
+        departmentId: this.form.value.departmentId,
+        certifications: []
+      }
+      ;
     this.employeeService.edit(employeeRequest).subscribe({
       next: (response) => {
         console.log(response);
         if (response.code == "200") {
-          const data = {message: Message.EDIT_SUCCESS}
+          const data = { message: Message.EDIT_SUCCESS }
           this.router.navigate(['/user/adm006'], { state: { data: data } });
+          sessionStorage.removeItem("employee");
         } else {
-          this.errorMessage = response.message.code + ' ' + response.message.params[0];
+          this.errorMessage = this.messageService.getMessages(response.message.code, response.message.params[0]);
           console.log(this.errorMessage);
         }
       },
