@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { EmployeeRequest } from 'src/app/model/employeeRequest';
 import { Message } from 'src/app/model/messages';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
-import { MessageService } from 'src/app/service/message.service';
+import { MessageService } from 'src/app/service/message/message.service';
 
 @Component({
   selector: 'app-adm005',
