@@ -37,7 +37,7 @@ export class Adm005Component implements OnInit {
     const value = sessionStorage.getItem("employee");
     if (value) {
       this.form = this.fb.group(JSON.parse(value));
-      console.log(this.form.value);
+      // console.log(this.form.value);
     }
   }
 

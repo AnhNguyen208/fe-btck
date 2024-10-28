@@ -226,7 +226,7 @@ export class Adm004Component implements OnInit {
    * Kiểm tra thông tin employee đã nhập có hợp lệ không
    */
   validateForm() {
-    console.log(this.form);
+    // console.log(this.form);
 
     if (this.isTouchedAndInvalid('employeeLoginId')) {
       if (this.form.get('employeeLoginId')?.errors?.['required']) {
@@ -291,7 +291,7 @@ export class Adm004Component implements OnInit {
     }
 
     if (this.isTouchedAndInvalid('employeeLoginPassword')) {
-      if (this.form.get('employeeLoginPassword')?.errors?.['required']) {
+      if (this.form.get('employeeLoginPassword')?.errors?.['required'] && this.form.get('employeeId')?.value == '') {
         this.errorMessage.employeeLoginPassword = ErrorMessages.ER001('パスワード');
       } else if (this.form.get('employeeLoginPassword')?.errors?.['maxlength'] || this.form.get('employeeLoginPassword')?.errors?.['minlength']) {
         this.errorMessage.employeeLoginPassword = ErrorMessages.ER007('パスワード', 8, 50);
@@ -420,7 +420,7 @@ export class Adm004Component implements OnInit {
     this.form.get('employeeLoginPassword')?.updateValueAndValidity();
     this.form.get('employeeLoginConfirmPassword')?.updateValueAndValidity();
 
-    console.log(this.form.get('employeeLoginPassword')?.validator?.toString());
+    // console.log(this.form.get('employeeLoginPassword')?.validator?.toString());
   }
 
   /**
@@ -443,7 +443,7 @@ export class Adm004Component implements OnInit {
         }
       });
 
-      console.log(this.form.value);
+      // console.log(this.form.value);
 
       sessionStorage.setItem("employee", JSON.stringify(this.form.value));
       this.router.navigate(['user/adm005']);
