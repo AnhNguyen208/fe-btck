@@ -151,7 +151,7 @@ export class Adm004Component implements OnInit {
     } else {
       const state = history.state;
       if (state && state.data) {
-        console.log('User ID:', state.data.id);
+        // console.log('User ID:', state.data.id);
         this.getDetailEmployee(state.data.id);
         this.onPasswordAndConfirmPasswordChange();
       } else {
@@ -450,6 +450,19 @@ export class Adm004Component implements OnInit {
     } else {
       // Mark all fields as touched to show validation errors
       this.form.markAllAsTouched();
+    }
+  }
+
+  /**
+   * Quay lại màn hình ADM003 khi đang ở mode edit
+   * Quay lại màn hình ADM002 khi đang ở mode add
+   */
+  returnBtn() {
+    if(this.form.get('employeeId')?.value) {
+      const data = { id: this.form.get('employeeId')?.value };
+      this.router.navigate(['/user/adm003'], { state: { data: data } });
+    } else {
+      this.router.navigate(['/user/list']);
     }
   }
 }

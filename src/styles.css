@@ -35,6 +35,29 @@ a:hover {
   color: #57b846;
 }
 
+.scroll-top {
+	font-family: Arial, Sans-serif;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+	transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.scroll-top:focus {
+	outline: none !important;
+}
+
+.scroll-top:hover {
+	text-decoration: none;
+  color: #57b846;
+}
+
 /*---------------------------------------------*/
 h1,h2,h3,h4,h5,h6,
 p {
@@ -326,7 +349,7 @@ main {
 }
 
 .content {
-  padding: 40px 0 80px;
+  padding: 89px 0 80px;
 }
 
 .content-main {

@@ -19,7 +19,7 @@ export class Adm003Component implements OnInit {
     const state = history.state;
 
     if (state && state.data) {
-      console.log('User ID:', state.data.id);
+      // console.log('User ID:', state.data.id);
       this.getDetailEmployee(state.data.id)
     } else {
       this.router.navigate(['**']);
