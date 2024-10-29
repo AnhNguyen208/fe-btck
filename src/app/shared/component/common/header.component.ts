@@ -11,8 +11,6 @@ export class HeaderComponent {
   ) { }
 
   scrollTop() {
-    console.log("asdgasdgasd");
-    
     // Cuộn lên đầu trang
     window.scrollTo({
       top: 0,
