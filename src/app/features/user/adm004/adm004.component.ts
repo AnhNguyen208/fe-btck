@@ -1,9 +1,13 @@
+/**
+ * Copyright(C) 2024  Luvina
+ * Adm004Component.ts, 10/10/2024 AnhNLT
+ */
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Certification } from 'src/app/model/certification';
-import { Deaprtment } from 'src/app/model/department';
-import { ErrorMessages } from 'src/app/model/messages';
+import { Department } from 'src/app/model/department';
+import { ErrorMessages } from 'src/app/model/errorMessages';
 import { CertificationService } from 'src/app/service/certification/certification.service';
 import { DepartmentService } from 'src/app/service/department/department.service';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
@@ -13,9 +17,13 @@ import { EmployeeService } from 'src/app/service/employee/employee.service';
   templateUrl: './adm004.component.html',
   styleUrls: ['./adm004.component.css']
 })
+
+/**
+ * Component xử lý các chức năng của màn hình ADM004
+ */
 export class Adm004Component implements OnInit {
   id: string = '';
-  departments: Deaprtment[] = [];
+  departments: Department[] = [];
   certifications: Certification[] = [];
   form: FormGroup<any>;
   bsValue: Date = new Date();

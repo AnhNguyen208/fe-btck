@@ -1,9 +1,18 @@
+/**
+ * Copyright(C) 2024  Luvina
+ * MessageService.ts, 27/10/2024 AnhNLT
+ */
 import { Injectable } from '@angular/core';
-import { ErrorMessages, MessageCode } from '../../model/messages';
+import { ErrorMessages } from '../../model/errorMessages';
+import { MessageCode } from 'src/app/model/messageCode';
 
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Xử lý các thông báo lỗi theo code và params
+ */
 export class MessageService {
 
   constructor() { }

@@ -1,9 +1,13 @@
+/**
+ * Copyright(C) 2024  Luvina
+ * Adm005Component.ts, 10/10/2024 AnhNLT
+ */
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeRequest } from 'src/app/model/employeeRequest';
-import { Message } from 'src/app/model/messages';
+import { Message } from 'src/app/model/message';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
 import { MessageService } from 'src/app/service/message/message.service';
 
@@ -12,6 +16,10 @@ import { MessageService } from 'src/app/service/message/message.service';
   templateUrl: './adm005.component.html',
   styleUrls: ['./adm005.component.css']
 })
+
+/**
+ * Component xử lý các chức năng của màn hình ADM005
+ */
 export class Adm005Component implements OnInit {
   form: FormGroup<any>;
   errorMessage: string = '';

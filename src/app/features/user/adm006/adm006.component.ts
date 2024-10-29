@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2024  Luvina
+ * Adm006Component.ts, 18/10/2024 AnhNLT
+ */
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -5,6 +9,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './adm006.component.html',
   styleUrls: ['./adm006.component.css']
 })
+
+/**
+ * Component xử lý các chức năng của màn hình ADM006
+ */
 export class Adm006Component implements OnInit {
   message: string = '';
 

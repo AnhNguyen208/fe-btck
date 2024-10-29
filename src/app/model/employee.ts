@@ -1,3 +1,11 @@
+/**
+ * Copyright(C) 2024  Luvina
+ * employee.ts, 06/10/2024 AnhNLT
+ */
+
+/**
+ * Thông tin về employee trong màn hình ADM002
+ */
 export class Employee {
     employeeId: number;
     employeeName: string;

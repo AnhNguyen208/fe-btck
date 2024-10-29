@@ -1,6 +1,10 @@
+/**
+ * Copyright(C) 2024  Luvina
+ * Adm003Component.ts, 21/10/2024 AnhNLT
+ */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Message } from 'src/app/model/messages';
+import { Message } from 'src/app/model/message';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
 
 @Component({
@@ -8,6 +12,10 @@ import { EmployeeService } from 'src/app/service/employee/employee.service';
   templateUrl: './adm003.component.html',
   styleUrls: ['./adm003.component.css']
 })
+
+/**
+ * Component xử lý các chức năng của màn hình ADM003
+ */
 export class Adm003Component implements OnInit {
   employeeDetail: any;
   constructor(
@@ -70,7 +78,7 @@ export class Adm003Component implements OnInit {
         next: (response) => {
           // console.log(response);
           if (response.code == "200") {
-            const data = {message: "ユーザの削除が完了しました。"}
+            const data = {message: Message.DELETE_SUCCESS}
             this.router.navigate(['/user/adm006'], { state: { data: data } });
           } else {
             this.router.navigate(['**']);

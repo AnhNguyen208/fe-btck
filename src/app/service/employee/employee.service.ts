@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2024  Luvina
+ * EmployeeService.ts, 04/10/2024 AnhNLT
+ */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -7,6 +11,10 @@ import { EmployeeRequest } from 'src/app/model/employeeRequest';
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Xử lý các yêu cầu liên quan đến employee
+ */
 export class EmployeeService {
   private apiUrl = AppConstants.BASE_URL_API + '/employee';
 
