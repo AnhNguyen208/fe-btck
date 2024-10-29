@@ -20,9 +20,6 @@ export class UserListComponent {
   totalPages: number = 0;
   totalRecords: number = 0;
   limit: number = 5;
-  ord_employee_name: string = 'ASC';
-  ord_certification_name: string = 'ASC';
-  ord_end_date: string = 'ASC';
 
   constructor(
     private router: Router,
@@ -33,13 +30,21 @@ export class UserListComponent {
     this.form = this.fb.group({
       departmentId: [''],
       employeeName: ['', [Validators.maxLength(125)]],
+      ordEmployeeName: ['ASC'],
+      ordCertificationName: ['ASC'],
+      ordEndDate: ['ASC'],
     });
+
+    this.form.valueChanges.subscribe(() => {
+      sessionStorage.setItem("search", JSON.stringify(this.form.value));
+    })
   }
 
   @ViewChild('firstInput')
   firstInputElement!: ElementRef;
 
   ngOnInit(): void {
+    this.getSearchValue();
     this.getDepartments();
     this.getEmployees();
   };
@@ -47,6 +52,21 @@ export class UserListComponent {
   ngAfterViewInit(): void {
     // Focus vào phần tử đầu tiên sau khi view được khởi tạo
     this.firstInputElement.nativeElement.focus();
+  }
+
+  getSearchValue() {
+    const value = sessionStorage.getItem("search");
+    if (value) {
+      let searchValue = JSON.parse(value);
+
+      this.form.patchValue({
+        departmentId: searchValue.departmentId,
+        employeeName: searchValue.employeeName,
+        ordEmployeeName: searchValue.ordEmployeeName,
+        ordCertificationName: searchValue.ordCertificationName,
+        ordEndDate: searchValue.ordEndDate,
+      });
+    }
   }
 
   /**
@@ -77,8 +97,8 @@ export class UserListComponent {
    */
   getEmployees() {
     this.employeeService.getAll(this.form.value.employeeName,
-      this.form.value.departmentId, this.ord_employee_name,
-      this.ord_certification_name, this.ord_end_date, (this.currentPage - 1) * this.limit, this.limit)
+      this.form.value.departmentId, this.form.value.ordEmployeeName,
+      this.form.value.ordCertificationName, this.form.value.ordEndDate, (this.currentPage - 1) * this.limit, this.limit)
       .subscribe({
         next: (response) => {
           // console.log(response);
@@ -117,10 +137,14 @@ export class UserListComponent {
    * Thay đổi cách sắp xếp danh sách employee theo employeeName
    */
   changeOrderEmployeeName() {
-    if (this.ord_employee_name === 'ASC') {
-      this.ord_employee_name = 'DESC';
+    if (this.form.value.ordEmployeeName === 'ASC') {
+      this.form.patchValue({
+        ordEmployeeName: 'DESC'
+      });
     } else {
-      this.ord_employee_name = 'ASC'
+      this.form.patchValue({
+        ordEmployeeName: 'ASC'
+      });
     }
 
     this.search();
@@ -130,11 +154,14 @@ export class UserListComponent {
    * Thay đổi cách sắp xếp danh sách employee theo certificationName
    */
   changeOrderCertificationName() {
-    console.log(this.ord_certification_name);
-    if (this.ord_certification_name === 'ASC') {
-      this.ord_certification_name = 'DESC';
+    if (this.form.value.ordCertificationName === 'ASC') {
+      this.form.patchValue({
+        ordCertificationName: 'DESC'
+      });
     } else {
-      this.ord_certification_name = 'ASC'
+      this.form.patchValue({
+        ordCertificationName: 'ASC'
+      });
     }
 
     this.search();
@@ -144,10 +171,14 @@ export class UserListComponent {
    * Thay đổi cách sắp xếp danh sách employee theo endDate
    */
   changeOrderEndDate() {
-    if (this.ord_end_date === 'ASC') {
-      this.ord_end_date = 'DESC';
+    if (this.form.value.ordEndDate === 'ASC') {
+      this.form.patchValue({
+        ordEndDate: 'DESC'
+      });
     } else {
-      this.ord_end_date = 'ASC'
+      this.form.patchValue({
+        ordEndDate: 'ASC'
+      });
     }
 
     this.search();

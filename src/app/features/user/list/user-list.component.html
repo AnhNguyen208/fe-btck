@@ -33,9 +33,9 @@
       <div class="css-grid-table box-shadow">
         <div class="css-grid-table-header">
           <div>ID</div>
-          <ng-container *ngIf="ord_employee_name">
+          <ng-container>
             <div (click)="changeOrderEmployeeName()">
-              氏名 {{ord_employee_name === 'ASC' ? '▲▽' : '▼△' }}
+              氏名 {{form.get('ordEmployeeName')?.value === 'ASC' ? '▲▽' : '▼△' }}
             </div>
           </ng-container>
 
@@ -43,14 +43,14 @@
           <div>グループ</div>
           <div>メールアドレス</div>
           <div>電話番号</div>
-          <ng-container *ngIf="ord_certification_name">
+          <ng-container>
             <div (click)="changeOrderCertificationName()">
-              日本語能力 {{ord_certification_name === 'ASC' ? '▲▽' : '▼△' }}
+              日本語能力 {{form.get('ordCertificationName')?.value === 'ASC' ? '▲▽' : '▼△' }}
             </div>
           </ng-container>
-          <ng-container *ngIf="ord_end_date">
+          <ng-container>
             <div (click)="changeOrderEndDate()">
-              失効日 {{ord_end_date === 'ASC' ? '▲▽' : '▼△' }}
+              失効日 {{form.get('ordEndDate')?.value === 'ASC' ? '▲▽' : '▼△' }}
             </div>
           </ng-container>
           <div>点数</div>
