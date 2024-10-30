@@ -31,8 +31,7 @@ export class Adm003Component implements OnInit {
       // console.log('User ID:', state.data.id);
       this.getDetailEmployee(state.data.id)
     } else {
-      const data = ErrorMessages.ER023.toString();
-      this.router.navigate(['**'], { state: { data: data } });
+      this.router.navigate(['**'], { state: { message: ErrorMessages.ER023() } });
       console.log('No data passed in state');
     }
   }
@@ -49,8 +48,7 @@ export class Adm003Component implements OnInit {
           this.employeeDetail = response;
           // console.log(this.employeeDetail);
         } else {
-          const data = ErrorMessages.ER023.toString();
-          this.router.navigate(['**'], { state: { data: data } });
+          this.router.navigate(['**'], { state: { message: ErrorMessages.ER023() } });
         }
       },
       error: (error) => {
@@ -84,8 +82,7 @@ export class Adm003Component implements OnInit {
             const data = { message: Message.DELETE_SUCCESS }
             this.router.navigate(['/user/adm006'], { state: { data: data } });
           } else {
-            const data = ErrorMessages.ER023.toString();
-            this.router.navigate(['**'], { state: { data: data } });
+            this.router.navigate(['**'], { state: { message: ErrorMessages.ER023() } });
           }
         },
         error: (error) => {

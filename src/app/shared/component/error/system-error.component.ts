@@ -14,8 +14,8 @@ export class SystemErrorComponent implements OnInit{
   ngOnInit(): void {
     const state = history.state;
 
-      if (state && state.data) {
-        this.message = state.data.message;
+    if (state && state.message) {
+        this.message = state.message;
       } else {
         console.log('No data passed in state');
       }

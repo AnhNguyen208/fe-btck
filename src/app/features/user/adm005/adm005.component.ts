@@ -122,7 +122,7 @@ export class Adm005Component implements OnInit {
   }
 
   /**
-   * Gửi request chỉnh s employyee đến BE
+   * Gửi request chỉnh sửa employyee đến BE
    * Xử lý response nhận được từ BE
    */
   editEmployee() {

@@ -93,8 +93,7 @@ export class UserListComponent {
           if (response.code == "200") {
             this.departments = response.departments;
           } else {
-            const data = ErrorMessages.ER023.toString();
-            this.router.navigate(['**'], { state: { data: data } });
+            this.router.navigate(['**'], { state: { message: ErrorMessages.ER023() } });
           }
         },
         error: (error) => {
