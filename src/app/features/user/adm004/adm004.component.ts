@@ -103,7 +103,8 @@ export class Adm004Component implements OnInit {
         if (response.code == "200") {
           this.departments = response.departments;
         } else {
-          this.router.navigate(['**']);
+          const data = ErrorMessages.ER023.toString();
+          this.router.navigate(['**'], { state: { data: data } });
         }
       },
       error: (error) => {
@@ -125,7 +126,8 @@ export class Adm004Component implements OnInit {
         if (response.code == "200") {
           this.certifications = response.certifications;
         } else {
-          this.router.navigate(['**']);
+          const data = ErrorMessages.ER023.toString();
+          this.router.navigate(['**'], { state: { data: data } });
         }
       },
       error: (error) => {
@@ -179,7 +181,8 @@ export class Adm004Component implements OnInit {
         if (response.code == "200") {
           this.setFormValue(response);
         } else {
-          this.router.navigate(['**']);
+          const data = ErrorMessages.ER023.toString();
+          this.router.navigate(['**'], { state: { data: data } });
         }
       },
       error: (error) => {

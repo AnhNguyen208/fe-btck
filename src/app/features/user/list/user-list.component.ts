@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
 import { Router } from '@angular/router';
+import { ErrorMessages } from 'src/app/model/errorMessages';
 
 @Component({
   selector: 'app-user-list',
@@ -48,6 +49,7 @@ export class UserListComponent {
     })
   }
 
+  // Sử dụng ViewChild để lấy tham chiếu đến input đầu tiên
   @ViewChild('firstInput')
   firstInputElement!: ElementRef;
 
@@ -91,7 +93,8 @@ export class UserListComponent {
           if (response.code == "200") {
             this.departments = response.departments;
           } else {
-            this.router.navigate(['**']);
+            const data = ErrorMessages.ER023.toString();
+            this.router.navigate(['**'], { state: { data: data } });
           }
         },
         error: (error) => {

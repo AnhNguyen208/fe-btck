@@ -4,6 +4,7 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ErrorMessages } from 'src/app/model/errorMessages';
 import { Message } from 'src/app/model/message';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
 
@@ -30,7 +31,8 @@ export class Adm003Component implements OnInit {
       // console.log('User ID:', state.data.id);
       this.getDetailEmployee(state.data.id)
     } else {
-      this.router.navigate(['**']);
+      const data = ErrorMessages.ER023.toString();
+      this.router.navigate(['**'], { state: { data: data } });
       console.log('No data passed in state');
     }
   }
@@ -39,7 +41,7 @@ export class Adm003Component implements OnInit {
    * Lấy thông tin chi tiết của employee từ EmployeeService
    * @param id EmployeeId muốn lấy thông tin
    */
-  getDetailEmployee (id: number) {
+  getDetailEmployee(id: number) {
     this.employeeService.getById(id).subscribe({
       next: (response) => {
         // console.log(response);
@@ -47,7 +49,8 @@ export class Adm003Component implements OnInit {
           this.employeeDetail = response;
           // console.log(this.employeeDetail);
         } else {
-          this.router.navigate(['**']);
+          const data = ErrorMessages.ER023.toString();
+          this.router.navigate(['**'], { state: { data: data } });
         }
       },
       error: (error) => {
@@ -78,10 +81,11 @@ export class Adm003Component implements OnInit {
         next: (response) => {
           // console.log(response);
           if (response.code == "200") {
-            const data = {message: Message.DELETE_SUCCESS}
+            const data = { message: Message.DELETE_SUCCESS }
             this.router.navigate(['/user/adm006'], { state: { data: data } });
           } else {
-            this.router.navigate(['**']);
+            const data = ErrorMessages.ER023.toString();
+            this.router.navigate(['**'], { state: { data: data } });
           }
         },
         error: (error) => {
