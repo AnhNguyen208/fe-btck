@@ -55,7 +55,7 @@ export class Adm004Component implements OnInit {
       employeeId: [''],
       employeeName: ['', [Validators.required, Validators.maxLength(125)]],
       employeeBirthDate: ['', [Validators.required]],
-      employeeEmail: ['', [Validators.required, Validators.maxLength(125), Validators.pattern(/^[\x00-\x7F]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/)]],
+      employeeEmail: ['', [Validators.required, Validators.maxLength(125), Validators.pattern(/^[\x00-\x7F]+$/), this.validateEmailFormat]],
       employeeTelephone: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[0-9]*$/)]],
       employeeNameKana: ['', [Validators.required, Validators.maxLength(125), Validators.pattern(/^[\u30A0-\u30FF\uFF65-\uFF9F・]+$/), this.validateKanaHalfSize]],
       employeeLoginId: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^(?![0-9])[a-zA-Z0-9_]*$/)]],
@@ -283,6 +283,8 @@ export class Adm004Component implements OnInit {
         this.errorMessage.employeeEmail = ErrorMessages.ER001('メールアドレス');
       } else if (this.form.get('employeeEmail')?.errors?.['pattern']) {
         this.errorMessage.employeeEmail = ErrorMessages.ER008('メールアドレス');
+      } else if (this.form.get('employeeEmail')?.errors?.['invalidEmailFormat']) {
+        this.errorMessage.employeeEmail = ErrorMessages.ER005('メールアドレス', 'xxx@xx');
       } else if (this.form.get('employeeEmail')?.errors?.['maxlength']) {
         this.errorMessage.employeeEmail = ErrorMessages.ER006('メールアドレス', 125);
       }
@@ -350,9 +352,15 @@ export class Adm004Component implements OnInit {
 
   validateKanaHalfSize(control: AbstractControl): ValidationErrors | null {
     const regexKatakana = /^[\uFF65-\uFF9F・]+$/;
-    let nameKana: string = control?.value?.toString() || '';
 
-    return regexKatakana.test(nameKana) ? null : { invalidKanaHalfSize: true };
+    return regexKatakana.test(control?.value) ? null : { invalidKanaHalfSize: true };
+  }
+
+  validateEmailFormat(control: AbstractControl): ValidationErrors | null {
+    const regexEmail = /^[\x00-\x7F]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+
+    return regexEmail.test(control?.value) ? null : { invalidEmailFormat: true };
+
   }
 
   /**
