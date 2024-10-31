@@ -21,7 +21,8 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
                             <select class="form-control" formControlName="departmentId"
-                                [required]="isTouchedAndInvalid('departmentId') ? true : false">
+                                [required]="isTouchedAndInvalid('departmentId') ? true : false"
+                                [ngClass]="{'form-control-invalid' : isTouchedAndInvalid('departmentId')}">
                                 <option value=''>選択してください</option>
                                 <option *ngFor="let item of departments" [value]="item.departmentId">
                                     {{item.departmentName}}
@@ -37,7 +38,8 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
                             <input type="text" class="form-control" formControlName="employeeName"
-                                [required]="isTouchedAndInvalid('employeeName') ? true : false">
+                                [required]="isTouchedAndInvalid('employeeName') ? true : false"
+                                [ngClass]="{'form-control-invalid' : isTouchedAndInvalid('employeeName')}">
                             <div *ngIf="isTouchedAndInvalid('employeeName')">
                                 <div class="error-message">{{errorMessage.employeeName}}</div>
                             </div>
@@ -48,7 +50,8 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
                             <input type="text" class="form-control" formControlName="employeeNameKana"
-                                placeholder="ｶﾀｶﾅ" [required]="isTouchedAndInvalid('employeeNameKana') ? true : false">
+                                placeholder="ｶﾀｶﾅ" [required]="isTouchedAndInvalid('employeeNameKana') ? true : false"
+                                [ngClass]="{'form-control-invalid' : isTouchedAndInvalid('employeeNameKana')}">
                             <div *ngIf="isTouchedAndInvalid('employeeNameKana')">
                                 <div class="error-message">{{errorMessage.employeeNameKana}}</div>
                             </div>
@@ -65,7 +68,8 @@
                                 <input class="form-control" type="text" readonly formControlName="employeeBirthDate"
                                     #datePickerBirthdate="bsDatepicker" bsDatepicker
                                     [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }"
-                                    [required]="isTouchedAndInvalid('employeeBirthDate') ? true : false">
+                                    [required]="isTouchedAndInvalid('employeeBirthDate') ? true : false"
+                                    [ngClass]="{'form-control-invalid' : isTouchedAndInvalid('employeeBirthDate')}">
                                 <span (click)="datePickerBirthdate.show()" style="margin-left: -15px;"
                                     class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                 <div style="margin-left: -220px;" *ngIf="isTouchedAndInvalid('employeeBirthDate')">
@@ -79,7 +83,8 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
                             <input type="text" class="form-control" formControlName="employeeEmail"
-                                [required]="isTouchedAndInvalid('employeeEmail') ? true : false">
+                                [required]="isTouchedAndInvalid('employeeEmail') ? true : false"
+                                [ngClass]="{'form-control-invalid': isTouchedAndInvalid('employeeEmail')}">
                             <div *ngIf="isTouchedAndInvalid('employeeEmail')">
                                 <div class="error-message">{{errorMessage.employeeEmail}}</div>
                             </div>
@@ -90,7 +95,8 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
                             <input type="text" class="form-control" formControlName="employeeTelephone"
-                                [required]="isTouchedAndInvalid('employeeTelephone') ? true : false">
+                                [required]="isTouchedAndInvalid('employeeTelephone') ? true : false"
+                                [ngClass]="{'form-control-invalid': isTouchedAndInvalid('employeeTelephone')}">
                             <div *ngIf="isTouchedAndInvalid('employeeTelephone')">
                                 <div class="error-message">{{errorMessage.employeeTelephone}}</div>
                             </div>
@@ -101,7 +107,8 @@
                                 <span *ngIf="form.get('employeeId')?.value == ''" class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
                             <input type="password" class="form-control" formControlName="employeeLoginPassword"
-                                [required]="isTouchedAndInvalid('employeeLoginPassword') ? true : false">
+                                [required]="isTouchedAndInvalid('employeeLoginPassword') ? true : false"
+                                [ngClass]="{'form-control-invalid': isTouchedAndInvalid('employeeLoginPassword')}">
                             <div *ngIf="isTouchedAndInvalid('employeeLoginPassword')">
                                 <div class="error-message">{{errorMessage.employeeLoginPassword}}</div>
                             </div>
@@ -111,7 +118,8 @@
                         <label class="col-form-label col-sm-2"><i class="relative">パスワード（確認）:</i></label>
                         <div class="col-sm col-sm-10">
                             <input type="password" class="form-control" formControlName="employeeLoginConfirmPassword"
-                                [required]="isTouchedAndInvalid('employeeLoginConfirmPassword') ? true : false">
+                                [required]="isTouchedAndInvalid('employeeLoginConfirmPassword') ? true : false"
+                                [ngClass]="{'form-control-invalid': isTouchedAndInvalid('employeeLoginConfirmPassword')}">
                             <div *ngIf="isTouchedAndInvalid('employeeLoginConfirmPassword')">
                                 <div class="error-message">{{errorMessage.employeeLoginConfirmPassword}}</div>
                             </div>
@@ -145,7 +153,8 @@
                                         <input class="form-control" readonly formControlName="startDate" type="text"
                                             bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }"
                                             #datePickerStartDate="bsDatepicker"
-                                            [required]="isTouchedAndInvalid('certifications.0.startDate') ? true : false">
+                                            [required]="isTouchedAndInvalid('certifications.0.startDate') ? true : false"
+                                            [ngClass]="{'form-control-invalid': isTouchedAndInvalid('certifications.0.startDate')}">
                                         <span (click)="datePickerStartDate.show()" class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
                                         <div style="margin-left: -220px;"
@@ -163,7 +172,8 @@
                                         <input class="form-control" readonly formControlName="endDate" type="text"
                                             bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD' }"
                                             #datePickerEndDate="bsDatepicker"
-                                            [required]="isTouchedAndInvalid('certifications.0.endDate') ? true : false">
+                                            [required]="isTouchedAndInvalid('certifications.0.endDate') ? true : false"
+                                            [ngClass]="{'form-control-invalid': isTouchedAndInvalid('certifications.0.endDate')}">
                                         <span (click)="datePickerEndDate.show()" class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
                                         <div style="margin-left: -220px;"
@@ -183,7 +193,8 @@
                                             class="note-red">*</span></i></label>
                                 <div class="col-sm col-sm-10">
                                     <input type="text" class="form-control" formControlName="score"
-                                        [required]="isTouchedAndInvalid('certifications.0.score') ? true : false">
+                                        [required]="isTouchedAndInvalid('certifications.0.score') ? true : false"
+                                        [ngClass]="{'form-control-invalid': isTouchedAndInvalid('certifications.0.score')}">
                                     <div *ngIf="isTouchedAndInvalid('certifications.0.score')">
                                         <div class="error-message">{{errorMessage.score}}</div>
                                     </div>
