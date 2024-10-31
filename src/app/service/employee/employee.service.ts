@@ -42,6 +42,8 @@ export class EmployeeService {
     let params = new HttpParams();
 
     if (employee_name) {
+      employee_name = employee_name.trim();
+      employee_name = employee_name.replace('%', '\\%').replace('_', '\\_');
       params = params.set('employee_name', employee_name);
     }
 
