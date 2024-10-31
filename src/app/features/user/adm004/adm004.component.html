@@ -9,7 +9,8 @@
                                     class="note-red">*</span></i></label>
                         <div class="col-sm col-sm-10">
                             <input #firstInput type="text" class="form-control" formControlName="employeeLoginId"
-                                [required]="isTouchedAndInvalid('employeeLoginId') ? true : false">
+                                [required]="isTouchedAndInvalid('employeeLoginId') ? true : false"
+                                [ngClass]="{'form-control-invalid': isTouchedAndInvalid('employeeLoginId')}">
                             <div *ngIf="isTouchedAndInvalid('employeeLoginId')">
                                 <div class="error-message">{{errorMessage.employeeLoginId}}</div>
                             </div>
