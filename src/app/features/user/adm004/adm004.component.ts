@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Certification } from 'src/app/model/certification';
 import { Department } from 'src/app/model/department';
 import { ErrorMessages } from 'src/app/model/errorMessages';
+import { ResponseCode } from 'src/app/model/responseCode';
 import { CertificationService } from 'src/app/service/certification/certification.service';
 import { DepartmentService } from 'src/app/service/department/department.service';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
@@ -100,7 +101,7 @@ export class Adm004Component implements OnInit {
     this.departmentService.getAll().subscribe({
       next: (response) => {
         // console.log(response);
-        if (response.code == "200") {
+        if (response.code == ResponseCode.CODE_200) {
           this.departments = response.departments;
         } else {
           this.router.navigate(['**'], { state: { message: ErrorMessages.ER023() } });
@@ -122,7 +123,7 @@ export class Adm004Component implements OnInit {
     this.certificationService.getAll().subscribe({
       next: (response) => {
         // console.log(response);
-        if (response.code == "200") {
+        if (response.code == ResponseCode.CODE_200) {
           this.certifications = response.certifications;
         } else {
           this.router.navigate(['**'], { state: { message: ErrorMessages.ER023() } });
@@ -176,7 +177,7 @@ export class Adm004Component implements OnInit {
     this.employeeService.getById(id).subscribe({
       next: (response) => {
         // console.log(response);
-        if (response.code == "200") {
+        if (response.code == ResponseCode.CODE_200) {
           this.setFormValue(response);
         } else {
           this.router.navigate(['**'], { state: { message: ErrorMessages.ER023() } });

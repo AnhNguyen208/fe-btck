@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ErrorMessages } from 'src/app/model/errorMessages';
 import { Message } from 'src/app/model/message';
+import { ResponseCode } from 'src/app/model/responseCode';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
 
 @Component({
@@ -44,7 +45,7 @@ export class Adm003Component implements OnInit {
     this.employeeService.getById(id).subscribe({
       next: (response) => {
         // console.log(response);
-        if (response.code == "200") {
+        if (response.code == ResponseCode.CODE_200) {
           this.employeeDetail = response;
           // console.log(this.employeeDetail);
         } else {
@@ -78,7 +79,7 @@ export class Adm003Component implements OnInit {
       this.employeeService.deleteById(id).subscribe({
         next: (response) => {
           // console.log(response);
-          if (response.code == "200") {
+          if (response.code == ResponseCode.CODE_200) {
             const data = { message: Message.DELETE_SUCCESS }
             this.router.navigate(['/user/adm006'], { state: { data: data } });
           } else {

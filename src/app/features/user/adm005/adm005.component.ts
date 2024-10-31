@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeRequest } from 'src/app/model/employeeRequest';
 import { Message } from 'src/app/model/message';
+import { ResponseCode } from 'src/app/model/responseCode';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
 import { MessageService } from 'src/app/service/message/message.service';
 
@@ -102,7 +103,7 @@ export class Adm005Component implements OnInit {
     this.employeeService.add(employeeRequest).subscribe({
       next: (response) => {
         console.log(response);
-        if (response.code == "200") {
+        if (response.code == ResponseCode.CODE_200) {
           const data = { message: Message.ADD_SUCCESS }
           this.router.navigate(['/user/adm006'], { state: { data: data } });
           sessionStorage.removeItem("employee");
@@ -164,7 +165,7 @@ export class Adm005Component implements OnInit {
     this.employeeService.edit(employeeRequest).subscribe({
       next: (response) => {
         console.log(response);
-        if (response.code == "200") {
+        if (response.code == ResponseCode.CODE_200) {
           const data = { message: Message.EDIT_SUCCESS }
           this.router.navigate(['/user/adm006'], { state: { data: data } });
           sessionStorage.removeItem("employee");

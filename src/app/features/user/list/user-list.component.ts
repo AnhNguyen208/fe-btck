@@ -10,6 +10,7 @@ import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/service/employee/employee.service';
 import { Router } from '@angular/router';
 import { ErrorMessages } from 'src/app/model/errorMessages';
+import { ResponseCode } from 'src/app/model/responseCode';
 
 @Component({
   selector: 'app-user-list',
@@ -90,7 +91,7 @@ export class UserListComponent {
       .subscribe({
         next: (response) => {
           // console.log(response);
-          if (response.code == "200") {
+          if (response.code == ResponseCode.CODE_200) {
             this.departments = response.departments;
           } else {
             this.router.navigate(['**'], { state: { message: ErrorMessages.ER023() } });
